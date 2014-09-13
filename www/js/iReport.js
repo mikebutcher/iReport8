@@ -1782,7 +1782,7 @@ function doDominoLogin(username, password) {
 
 
         if (lastposition == -1) {
-            alert("Invalid Username or Password");
+            alert("Invalid Username orPassword");
             //initial_setup1();
             return (false);
         }
@@ -1859,10 +1859,9 @@ function loginReport() {
     }
 
 
-    //Login with the system credentials
-    
-    var username = "eReport";
-    var pw = "pingisgood";
+
+    var username = localStorage.getItem("username");
+    var pw = localStorage.getItem("password");
   
     doDominoLoginSilent(username, pw);
 
