@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<widget xmlns = "http://www.w3.org/ns/widgets"
+xmlns:gap = "http://phonegap.com/ns/1.0"
+id = "com.chardonlabs.9.14.14"
+version = "2.0">
+
+<name>iReport iOS 8</name>
+
+<description>
+iReport for iPhone iOS8
+</description>
+
+<author href="http://www.nitobi.com" email="mbutche1@gmail.com">
+Mike Butcher
+</author>
+<icon src="img/iconlogo57x57.png" gap:platform="ios" width="57" height="57" />
+<icon src="img/iconlogo114x114.png" gap:platform="ios" width="114" height="114" />
+<icon src="img/iconlogo72x72.png" gap:platform="ios" width="72" height="72" />
+<icon src="img/iconlogo144x144.png" gap:platform="ios" width="144" height="144" />
+<icon src="img/iconlogo76x76.png" gap:platform="ios" width="76" height="76" />
+<icon src="img/iconlogo120x120.png" gap:platform="ios" width="120" height="120" />
+<icon src="img/iconlogo152x152.png" gap:platform="ios" width="152" height="152" />
+
+<gap:splash src="splash640x960.png" gap:platform="ios" width="640" height="960" />
+<gap:splash src="splash640x960.png" gap:platform="ios" width="640" height="1136" />
+
+
+
+<preference name="phonegap-version" value="2.9.0" /> 
+
+<feature name="InAppBrowser">
+    <param name="ios-package" value="CDVInAppBrowser" />
+</feature>
+
+<preference name="fullscreen" value="true" />
+
+<preference name="orientation" value="default" />
+<preference name="webviewbounce" value="false" />
+
+
+</widget>

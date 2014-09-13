@@ -35,16 +35,16 @@ function initWEBDB() {
 
     var version = '1.0';
     var displayName = 'eReportDB';
-
-    localDB = window.openDatabase(shortName, version, displayName, maxSize); // instantiate the Database
-    //alert("localDB ok");
-    reportDB = window.openDatabase("Reports", version, "Reports", maxSize); // instantiate the ReportDatabase
+//var db = openDatabase('mydb', '1.0', 'Test DB', 2 * 1024 * 1024);
+    window.localDB = openDatabase(shortName, version, displayName, maxSize); // instantiate the Database
+    
+    window.reportDB = openDatabase("Reports", version, "Reports", maxSize); // instantiate the ReportDatabase
     //alert("reportDB ok");
-    historyDB = window.openDatabase("History", version, "History", maxSize); // instantiate the ReportDatabase
+    window.historyDB = openDatabase("History", version, "History", maxSize); // instantiate the ReportDatabase
     //alert("historyDB ok");
     //6-4-12 added error display for localDB
     localDB.onerror = function(e) {
-        alert("db error " + e);
+       // alert("db error " + e);
         console.log(e);
     };
 
@@ -324,22 +324,16 @@ function histDocsJSON(oObject) {
 } //end histDocJSON
 
 function TechiciansJSON(oObject) {
-    //    alert("in Technicians JSON");
-    //$("#progress").remove();
     var viewentries = oObject.viewentry;
     var n_viewentries = viewentries.length;
-    //alert("count " + n_viewentries);
     var slcount = viewentries.length;
-
     var entrydata = viewentries[0].entrydata;
-
     var sCol0 = returnJSONValue(entrydata[0]);
-
     daLength = sCol0.length
 
-    // } 
+
     var select = document.getElementById("techList");
-    //point to the field
+    
     for (var i = 0; i < daLength; i++) {
         //    alert("in for loop");
         //fill up the values
@@ -404,22 +398,13 @@ function SLgotDocsJSON(oObject) {
         var sCol13 = returnJSONValue(entrydata[13]);
         var sCol14 = returnJSONValue(entrydata[14]);
         var sCol15 = returnJSONValue(entrydata[15]);
-	
-		//alert('Low 15 ' + sCol15);
-					
-	
-		
         var sCol16 = returnJSONValue(entrydata[16]);
-		
-		//alert('High Cycles 16 ' + sCol16);
-        var sCol17 = returnJSONValue(entrydata[17]);
-	
-        var sCol18 = returnJSONValue(entrydata[18]);
+	    var sCol17 = returnJSONValue(entrydata[17]);
+	    var sCol18 = returnJSONValue(entrydata[18]);
         var sCol19 = returnJSONValue(entrydata[19]);
         var sCol20 = returnJSONValue(entrydata[20]);
         var sCol21 = returnJSONValue(entrydata[21]);
         var sCol22 = returnJSONValue(entrydata[22]);
-
         var sCol23 = returnJSONValue(entrydata[23]);
         var sCol24 = returnJSONValue(entrydata[24]);
         var sCol25 = returnJSONValue(entrydata[25]);
@@ -427,9 +412,7 @@ function SLgotDocsJSON(oObject) {
         var sCol27 = returnJSONValue(entrydata[27]);
         var sCol28 = returnJSONValue(entrydata[28]);
         //alert("sCol22 "+ sCol22);
-        //alert("sCol23 "+ sCol23);
-        //alert("sCol24 "+ sCol24);
-        //var sCol20 = returnJSONValue(entrydata[20])[0];
+         //var sCol20 = returnJSONValue(entrydata[20])[0];
         //write values to the Tables
 
         addTemplate(sCol0, sCol1, sCol2, sCol3, sCol4, sCol5, sCol6, sCol7, sCol8, sCol9, sCol10, sCol11, sCol12, sCol13, sCol14, sCol15, sCol16, sCol17, sCol18, sCol19, sCol20, sCol21, sCol22, sCol23, sCol24, sCol25, sCol26, sCol27, sCol28);
@@ -438,7 +421,6 @@ function SLgotDocsJSON(oObject) {
 
         //Build the Customer Templates List & Make them a consistent width 35 chars
         var tmpcustname = returnJSONValue(entrydata[1]);
-        //alert(tmpcustname);
         tmpcustname2 = tmpcustname.toString();
 
         document.getElementById('customer_templates').innerHTML += '<option value ="' + sCol0 + '">' + tmpcustname2.substring(0, 30) + '</option>';
@@ -520,14 +502,14 @@ function BVgotDocsJSON(oObject) {
 					var sCol27 = returnJSONValue(entrydata[27]);
 					var sCol28 = returnJSONValue(entrydata[28]);
 
-					//alert("sCol28"+ sCol28);
+					
 					//var sCol20 = returnJSONValue(entrydata[20])[0];
 					//write values to the Tables
 					addBookView(sCol0, sCol1, sCol2, sCol3, sCol4, sCol5, sCol6, sCol7, sCol8, sCol9, sCol10, sCol11, sCol12, sCol13, sCol14, sCol15, sCol16, sCol17, sCol18, sCol19, sCol20, sCol21, sCol22, sCol23, sCol24, sCol25, sCol26, sCol27, sCol28);
 					//addShrinkingList(sCol0, sCol1);
 					//Build the Customer Templates List & Make them a consistent width 35 chars
 					var tmpcustname = returnJSONValue(entrydata[1]);
-					//alert(tmpcustname);
+					
 					tmpcustname2 = tmpcustname.toString();
 
 					document.getElementById('customer_templates').innerHTML += '<option value ="' + sCol0 + '">' + tmpcustname2.substring(0, 30) + '</option>';
@@ -745,9 +727,9 @@ function resetDB() {
 
     var test = confirmDelete();
 
-    //alert(test);
+
     if (test == 1) {
-        // alert(localDB);
+     
         localDB.transaction(function(tx) {
             tx.executeSql('Drop table if exists shrinkinglist', []);
             tx.executeSql('Drop Table IF EXISTS BookView', []);
@@ -790,12 +772,9 @@ function resetDB2() {
 
 	var test = confirmDelete3();
 	
-    //alert(test);
+  
     if (test == 1) {
-        // alert(localDB);
-     
-
-        reportDB.transaction(function(tx) {
+              reportDB.transaction(function(tx) {
 
             tx.executeSql('Drop Table IF EXISTS Reports', []);
 
@@ -1275,6 +1254,17 @@ return;
         pdaEquipTest = temp.slice(s1, e1);
         //format as a string seperated by newlines
         frm.PDAEquipTest.value = pdaEquipTest.join('\n');
+
+//New way to split up rows
+/*
+  var tempArray = pdaEquipTest.join('\n');
+  alert(tempArray);
+
+    var area = document.getElementById("PDAEquipTest");
+    area.value= tempArray;
+*/
+
+
         //add it to history
         frm.PDAEquipTestHist.value = pdaEquipTest.join('\n');
 
@@ -1319,56 +1309,7 @@ return;
 		calcRanges();
 		
 
-	/*
-        var tempDataHist2 = new Array();
-        tempDataHist2 = document.forms[0].LastMonthEquipDataCollection2.value.split('\n');
-        history2 = tempDataHist2.slice(s1, e1);
-
-        frm.pdaDataCollectionHist2.value = history2.join('\n');
-
-        //alert("3: "+ document.forms[0].LastMonthEquipDataCollection3.value);
-        var tempDataHist3 = new Array();
-        tempDataHist3 = document.forms[0].LastMonthEquipDataCollection3.value.split('\n');
-        history3 = tempDataHist3.slice(s1, e1);
-
-        frm.pdaDataCollectionHist3.value = history3.join('\n');
-
-
-        //alert("4: "+ document.forms[0].LastMonthEquipDataCollection4.value);
-        var tempDataHist4 = new Array();
-        tempDataHist4 = document.forms[0].LastMonthEquipDataCollection4.value.split('\n');
-        history4 = tempDataHist4.slice(s1, e1);
-        frm.pdaDataCollectionHist4.value = history4.join('\n');
-
-
-
-        var tempDataHist5 = new Array();
-        tempDataHist5 = document.forms[0].LastMonthEquipDataCollection5.value.split('\n');
-        history5 = tempDataHist5.slice(s1, e1);
-        frm.pdaDataCollectionHist5.value = history5.join('\n');
-
-        var tempDataHist6 = new Array();
-        tempDataHist6 = document.forms[0].LastMonthEquipDataCollection6.value.split('\n');
-        history6 = tempDataHist6.slice(s1, e1);
-        frm.pdaDataCollectionHist6.value = history6.join('\n');
-
-        var tempDataHist7 = new Array();
-        tempDataHist7 = document.forms[0].LastMonthEquipDataCollection7.value.split('\n');
-        history7 = tempDataHist7.slice(s1, e1);
-        frm.pdaDataCollectionHist7.value = history7.join('\n');
-
-        var tempDataHist8 = new Array();
-        tempDataHist8 = document.forms[0].LastMonthEquipDataCollection8.value.split('\n');
-        history8 = tempDataHist8.slice(s1, e1);
-        frm.pdaDataCollectionHist8.value = history8.join('\n');
-
-        var tempDataHist9 = new Array();
-        tempDataHist9 = document.forms[0].LastMonthEquipDataCollection9.value.split('\n');
-        history9 = tempDataHist9.slice(s1, e1);
-        frm.pdaDataCollectionHist9.value = history9.join('\n');
-
-		*/
-		
+			
         var listType = localStorage.getItem('listType');
         //alert(listType);
         temp = document.forms[0].equipDataCollection.value.split('\n');
@@ -1430,8 +1371,7 @@ return;
 
         }
 
-        //advance / preload equipment
-        //backward ();
+
         forward333();
 
     }
@@ -1493,8 +1433,6 @@ function saveReport(custid, fieldname, value) {
     function(transaction) {
         transaction.executeSql("UPDATE Reports Set  " + fieldname + "= '" + value + "' where custid=" + custid);
     });
-
-
 
 
     //save to localstorage 
@@ -1771,10 +1709,7 @@ function setupUser() {
 
         window.location.replace("setup.html");
 
-
-
     }
-
 
 
 
@@ -1847,7 +1782,7 @@ function doDominoLogin(username, password) {
 
 
         if (lastposition == -1) {
-            alert("Invalid Password");
+            alert("Invalid Username or Password");
             //initial_setup1();
             return (false);
         }

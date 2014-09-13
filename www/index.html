@@ -4,13 +4,15 @@
 <head>
 
 
-<meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, maximum-scale=1.0" />
+<!-- <meta name="viewport" content="content="user-scalable=no, width=device-width, height=device-height, initial-scale=1.0, maximum-scale=1.0" /> -->
+
+<meta name="viewport" id="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,initial-scale=1.0" />
 
 <meta http-equiv="Content-type" content="text/html; charset=utf-8">
 <title>iReport</title>
 
 <link rel="stylesheet" href="css/stylemaster.css" type="text/css" media="screen" title="no title" charset="utf-8">
-
+<
 <script type="text/javascript" charset="utf-8" src="phonegap.js"></script>
 <script type="text/javascript" charset="utf-8" src="js/iReport.js"></script>
 <script type="text/javascript" charset="utf-8" src="js/begin.js"></script>
@@ -43,7 +45,28 @@
 
 
 <script type="text/javascript" charset="utf-8">
-     
+  
+
+//Fiz Zooming 
+  var metas = document.getElementsByTagName('meta');
+  var i;
+  if (navigator.userAgent.match(/iPhone/i)) {
+    for (i=0; i<metas.length; i++) {
+      if (metas[i].name == "viewport") {
+        metas[i].content = "width=device-width, minimum-scale=1.0, maximum-scale=1.0";
+      }
+    }
+    document.addEventListener("gesturestart", gestureStart, false);
+  }
+  function gestureStart() {
+    for (i=0; i<metas.length; i++) {
+      if (metas[i].name == "viewport") {
+        metas[i].content = "width=device-width, minimum-scale=0.25, maximum-scale=1.6";
+      }
+    }
+  }
+
+
 	     
 		
    //Global Vars
@@ -99,8 +122,8 @@ function onLoad() {
 			var daIndex = 0;
 		 	 initWEBDB(); //iReport.js
 		 	 hide("daJCPText");
-		//Check for blank Tech, if so then go to setup.html
-		setupUser();	//initDB.js	
+			//Check for blank Tech, if so then go to setup.html
+			setupUser();	//initDB.js	
 		
 		
 		//populate the Shrinking List
@@ -154,26 +177,11 @@ function onLoad() {
   	//display();
 
   	
-  //Check network status
-   
-         //navigator.network.isReachable("www.chardonlabs.com", reachableCallback, {});
+  
      	 
     }
     
- //Network Reachable ?
-		function reachableCallback(reachability) {
-        // There is no consistency on the format of reachability
-        var networkState = reachability.code || reachability;
 
-        var states = {};
-        states[NetworkStatus.NOT_REACHABLE]                      = 'Offline';
-        states[NetworkStatus.REACHABLE_VIA_CARRIER_DATA_NETWORK] = 'Cell';
-        states[NetworkStatus.REACHABLE_VIA_WIFI_NETWORK]         = 'WiFi';
-
-		document.getElementById('onlineStatus').innerHTML = states[networkState];
-
-        //alert('Connection type: ' + states[networkState]);
-    }
     
     
 	
@@ -210,7 +218,7 @@ function onLoad() {
  //VERSION
  ///////////////////////////////////////////////
       
-	  var Version = localStorage.setItem('Version', 'iPhone 9-22-13b');
+	  var Version = localStorage.setItem('Version', 'iPhone iOS8 9-23-14');
     
     
     
