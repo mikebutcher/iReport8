@@ -2,17 +2,13 @@
 
 <html>
 <head>
-
-
-<!-- <meta name="viewport" content="content="user-scalable=no, width=device-width, height=device-height, initial-scale=1.0, maximum-scale=1.0" /> -->
-
-<meta name="viewport" id="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,initial-scale=1.0" />
+<meta name="viewport" content="content="user-scalable=no, width=device-width, height=device-height, initial-scale=1.0, maximum-scale=1.0" /> 
 
 <meta http-equiv="Content-type" content="text/html; charset=utf-8">
 <title>iReport</title>
 
 <link rel="stylesheet" href="css/stylemaster.css" type="text/css" media="screen" title="no title" charset="utf-8">
-<
+
 <script type="text/javascript" charset="utf-8" src="phonegap.js"></script>
 <script type="text/javascript" charset="utf-8" src="js/iReport.js"></script>
 <script type="text/javascript" charset="utf-8" src="js/begin.js"></script>
@@ -47,7 +43,7 @@
 <script type="text/javascript" charset="utf-8">
   
 
-//Fiz Zooming 
+//Fix Zooming 
   var metas = document.getElementsByTagName('meta');
   var i;
   if (navigator.userAgent.match(/iPhone/i)) {
@@ -59,9 +55,10 @@
     document.addEventListener("gesturestart", gestureStart, false);
   }
   function gestureStart() {
+  alert('zoom a zoom zoom');
     for (i=0; i<metas.length; i++) {
       if (metas[i].name == "viewport") {
-        metas[i].content = "width=device-width, minimum-scale=0.25, maximum-scale=1.6";
+        metas[i].content = "width=device-width, minimum-scale=1.0, maximum-scale=1.0";
       }
     }
   }
@@ -128,7 +125,7 @@ function onLoad() {
 		
 		//populate the Shrinking List
 		//loadSL();  //iReport.js
-		localStorage.setItem('listType', 'shrinkingList' ); // init the List Type
+		
 		 	 
 
   
@@ -145,8 +142,10 @@ function onLoad() {
 	 document.getElementById('TechName4').innerHTML = localStorage.getItem("tech");
 	
 	//Get the Template List Type from localStorage
+
+	localStorage.setItem('listType', 'shrinkingList' ); // init the List Type
 	var listType = localStorage.getItem('listType');
-//alert("listType stored is: " + listType);
+
 
 	
 //Load Templates based on listType
@@ -173,9 +172,7 @@ function onLoad() {
   	
 	checkEmptyCustomer(); //Preload customer templates field with choices
 	
-  	//initialize the StopWatch
-  	//display();
-
+ 
   	
   
      	 
@@ -241,7 +238,7 @@ function onLoad() {
     
     var ListType = localStorage.getItem("listType");
     
-	console.log(ListType + " index.html 183");
+	console.log(ListType + " index.html");
 
   //Save Type of Report so you can remove from Shrinking List or Not Remove from BV
        
@@ -290,54 +287,6 @@ function onLoad() {
    
    
    
-   var d=new Date();
-var month=new Array(21);
-
-month[-9]="April '11";
-month[-8]="May '11";
-month[-7]="June '11";
-month[-6]="July '11";
-month[-5]="August '11";
-month[-4]="Sept '11";
-month[-3]="Oct '11";
-
-month[-2]="Nov '11";
-month[-1]="Dec '11";
-month[0]="January";
-month[1]="February";
-month[2]="March";
-month[3]="April";
-month[4]="May";
-month[5]="June";
-month[6]="July";
-month[7]="August";
-month[8]="September";
-month[9]="October";
-month[10]="November";
-month[11]="December";
-   
-   //alert(month[d.getMonth()-3]);
- //Insert  Month Name as Button Labels in Historical
- var month1 = month[d.getMonth()-1];
- var month2 = month[d.getMonth()-2];
- var month3 = month[d.getMonth()-3];
- var month4 = month[d.getMonth()-4];
- var month5 = month[d.getMonth()-5];
- var month6 = month[d.getMonth()-6];
- var month7 = month[d.getMonth()-7];
- var month8 = month[d.getMonth()-8];
- var month9 = month[d.getMonth()-9];
-  
- 
- localStorage.setItem("month1",month1); 
- localStorage.setItem("month2",month2);
- localStorage.setItem("month3",month3);
- localStorage.setItem("month4",month4);
- localStorage.setItem("month5",month5);
- localStorage.setItem("month6",month6);
- localStorage.setItem("month7",month7);
- localStorage.setItem("month8",month8);
- localStorage.setItem("month9",month9);
  
 //Signature Functions
  
