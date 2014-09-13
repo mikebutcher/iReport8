@@ -1,0 +1,304 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta name="viewport" content="width=320 user-scalable=no" />
+<meta http-equiv="Content-type" content="text/html; charset=utf-8">
+<title>iReport - User Setup</title>
+<link rel="stylesheet" href="css/stylemaster.css" type="text/css"media="screen" title="no title" charset="utf-8">
+
+<script type="text/javascript" charset="utf-8" src="phonegap.js"></script>
+<script type="text/javascript" charset="utf-8" src="js/iReport.js"></script>
+<script type="text/javascript" charset="utf-8" src="js/sync.js"></script>
+
+<link rel="stylesheet" href="jq/jquery.mobile-1.0.css" />
+<script src="jq/jquery.js"></script>
+<script src="jq/jquery.mobile-1.0.js"></script>
+
+
+<script type="text/javascript" charset="utf-8">
+    // Wait for PhoneGap to load
+    //
+    function onLoad() {
+
+		//Initialize the DB and Tables
+		initWEBDB();
+		
+		
+		//Load the List of Reports from the BU Table
+		
+		loadBU();  // iReport.JS
+		
+		//Dont need PG here
+		
+		document.addEventListener("deviceready", onDeviceReady, false);
+        
+          var tech =	 localStorage.getItem("tech");
+          //alert(tech);
+
+           var pw =	 localStorage.getItem("password");
+          //alert(pw);
+
+          
+    //alert("Found stored credentials "+tech + " " + pw);
+    
+    
+         var TheTech = localStorage.getItem("tech");
+         //alert(TheTech);
+		//document.getElementById('TechNameOptions').innerHTML = TheTech;
+    
+        
+    }
+    // PhoneGap is ready
+    //
+    function onDeviceReady() {
+        // Empty
+    	 initWEBDB();
+    	 //setupUser();
+  	 
+    	 
+  
+ 
+    	 
+    }
+  
+    
+
+    </script>
+
+
+
+
+
+
+
+
+<script type="text/javascript" charset="utf-8">
+
+   function saveUser(){
+   
+   		//alert(document.forms[0].techList.selectedIndex.value);
+   		
+   		
+   		
+		localStorage.setItem("tech", document.forms[0].username.value);
+		//alert(document.forms[0].password.value);
+		localStorage.setItem("password", document.forms[0].password.value);
+		
+		}
+		
+  function setTech(daTech){
+		localStorage.setItem("tech", daTech);
+		//alert(daTech);
+   }
+		
+		  function clearTech(){
+		localStorage.setItem("tech", '');
+		
+   }
+		
+
+		
+		
+
+		
+
+		
+		function initial_setup()
+		{
+	//$('body').append('<div id="progress" onClick="$("#progress").remove();"><img align="middle" src="img/downloading.gif">&nbsp;&nbsp;&nbsp;&nbsp;Authenticating</div>');
+	
+	//2/1/12 Commented out Authenticating
+	
+		//alert('Athenticating ...'); 
+		
+	
+		//alert(document.getElementById('Username').value);
+		 //alert(document.getElementById('Password').value);
+		
+			name = document.getElementById('Username').value;
+			//alert("name:" + name);
+			pw = document.getElementById('Password').value;
+			//alert("pw: " + pw);
+		
+		
+		if (name!=null && name!="" && pw!="")
+		  {
+						
+			daLogin = doDominoLogin(name, pw); // ajaxLogin.js
+			
+			if (daLogin){
+			
+			roles = localStorage.getItem("Roles");
+			alert("Login succeeded: " + roles);
+			
+        //localStorage.setItem("Tech", username);			
+		tech = localStorage.getItem("Tech");
+		
+		document.getElementById('TechNameOptions').innerHTML = tech;
+		localStorage.setItem("tech", tech);
+		//Set as current logged in user	
+			
+		lastposition = roles.indexOf("[DroidAdmin]");
+		
+		//alert(lastposition);
+		if (lastposition > -1){
+			//alert("Your Admin");
+			
+			//alert(lastposition);
+		
+		//	if (lastposition <> -1){
+			//alert("Your Admin");
+			
+			document.getElementById('userSetup').style.display = "none";
+		}
+			document.getElementById('actAs').style.display = "";
+			getTechnicianTemplates(); //fill the list of Techs added 7-29-11
+		}
+			
+		
+	
+			
+			
+			
+			
+			
+			
+			//Set the tech name based on who is logged in
+			localStorage.setItem("username", name);
+			localStorage.setItem("password", pw);
+			
+			
+			
+			//var TheTech = localStorage.getItem("tech");
+			//var TheTech = localStorage.getItem("username");
+			
+			//document.getElementById('TechName').innerHTML =localStorage.getItem("Tech");
+		
+
+			
+		//alert("hello " + TheTech);
+
+			}
+			
+			
+		  }
+		
+		
+		function restoreReport(unid){
+			console.log("unid - " + unid);
+			
+			//saveReport(custid, "Status", "Restored");
+			syncRestored(unid); // send the restored report to the server again!
+	
+		}
+	
+					//populates the dropdown list in restore.html
+			function loadBU() {
+
+
+				
+							document.getElementById('customer_templatesBU').innerHTML = '<option value =""></option>';
+
+						console.log("Loading Archived Reports ");
+						//initWEBDB();
+
+						reportDB.transaction(
+								function (transaction) {
+									transaction.executeSql("SELECT * from Reports where Status = 'Archived' ", [], dataHandlerBU, errorHandler);
+								}
+
+							);
+
+							function dataHandlerBU(transaction, results)
+							{
+
+						//alert(results.rows.length);
+
+							   for (var i=0; i<results.rows.length; i++) {
+									// Each row is a standard JavaScript array indexed by     
+									var row = results.rows.item(i);    
+								sCol0  = row['custid'];
+								sCol1 = row['ReportDate'] +" - " + row['name'];
+								unid = row['timestamp']; // this is actually a unique number assigned during creation 
+								
+							
+							  document.getElementById('customer_templatesBU').innerHTML += 
+										'<option value ="'+ unid +'">'+ sCol1.substring(0,430)  +'</option>';
+				   }
+				}
+			}
+	
+	
+	
+		
+      </script>
+
+
+</head>
+<body onload="onLoad();" id="stage" class="theme">
+<p></p>
+
+
+
+<div data-role="page" id="setup" data-theme="d">
+
+		<div data-role="header" data-theme="c" data-position="fixed" >
+								<a href="index.html" data-ajax="false" data-icon="home" data-theme="d">Home</a>
+									<center><img src="img/logo.png" alt="Chardon Logo" height="35px" width="30px" ></br><h2>Chardon Labs - iReport</h2></img></center>
+							
+																														
+						</div><!-- /header -->
+
+
+  <div data-role="content" data-theme="d">
+
+    <div class="ui-grid-">
+		   
+		   <table border="0" cellspacing="0" cellpadding="0">
+			<tr valign="top">
+				<td width="351" colspan="3">
+			
+
+				</td>
+			</tr>
+
+		</table>
+
+
+
+
+		<center><b><font size="4" face="Arial">Re-Send from Device</font><br></b><center>
+
+		<select data-role="none" name="customer_templatesBU"	id="customer_templatesBU" onChange="localStorage.setItem('Unid', this.value) "></select>
+		
+		
+		
+		
+		
+		
+			
+		</p>
+		</p>
+		</p>
+		<button id='restore' value="Send Report!" onclick="restoreReport(localStorage.getItem('Unid'));"  ></button>
+
+
+	   
+		   
+			
+			</div>
+		  </div>
+		  
+		  <div data-role="footer" data-position="fixed" data-id="toolbar">
+			<div data-role="navbar">
+			  <ul>
+				<li><a class="ui-btn-active" href="index.html" data-ajax="false"  data-icon="home" data-transition="fade">Home</a></li>
+			
+					  
+			  </ul>
+			</div>
+		  </div>
+		  
+</div>
+</body>
+</html>

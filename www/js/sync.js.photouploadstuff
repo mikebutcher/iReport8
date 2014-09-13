@@ -1,0 +1,815 @@
+function uploadPhoto(imageURI, extensiontype, unid, PhotoCount) {
+        //Save to localStorage to be used if there is an error with the transfer I can resend the photo
+    //alert(imageURI);
+            localStorage.setItem('imageURI', imageURI);
+            
+            alert("Sending image: "+ imageURI);
+            
+            localStorage.setItem('extensiontype', extensiontype);
+            localStorage.setItem('unid', unid);
+            localStorage.setItem('PhotoCount', PhotoCount);
+            
+    
+            var options = new FileUploadOptions();
+            //If the PreReport Changes on the Domino Side, the File Upload ID can change so its in a SubForm
+            options.fileKey="%%File.8525725e0077b3a2.57dd8a1b2c042d328525793800408b46.$Body.0.1A6"; //1st File Upload Control on PreReport   
+                     
+            //options.fileName=imageURI.substr(imageURI.lastIndexOf('/')+1);
+            
+            //added the extension type to the file name
+            options.fileName=imageURI.substr(imageURI.lastIndexOf('/')+1) + "."+extensiontype;
+                        
+             //figure out the mimetype for transfering
+                        
+            switch (extensiontype)
+            {
+            case "jpg":
+                options.mimeType="image/jpeg";
+              break;
+                          
+            case "png":
+                options.mimeType="image/png";
+              break;
+            case "gif":
+                options.mimeType="image/gif";
+              break;
+              
+            case "3gp":
+                options.mimeType="video/3gpp";
+              break;
+              
+            case "qcp":
+                options.mimeType="audio/vnd.qcelp";
+                break;
+                
+            case "mp4":
+                options.mimeType="video/mp4";
+              break;
+            case "mov":
+                options.mimeType="video/quicktime";
+                
+              break;
+                          
+            default:
+                options.mimeType="image/jpeg";
+            }
+            
+          //  alert(options.mimeType.valueOf())
+            
+ /*
+            
+            mov video/quicktime
+movie   video/x-sgi-movie
+mp2 audio/mpeg
+mp3 audio/mpeg
+mp4 video/mp4
+                        
+            if(extensiontype == "jpg"){
+                options.mimeType="image/jpeg";
+              }
+            
+            if(extensiontype == "3gp"){
+                options.mimeType="video/3gpp";
+             }
+          
+            
+            alert(options.mimeType.valueOf())
+     */
+     
+         
+            
+            //options.mimeType="image/jpeg";
+            
+        //turn off data chunks Domino pukes on it
+            options.chunkedMode = false;
+            
+/*
+            var params = new Object();
+            params.value1 = "test";
+            params.value2 = "param";
+            options.params = params;
+*/
+            var ft = new FileTransfer();
+      
+    
+            
+            $('#progress').remove();
+            $('body').append('<div id="progress"><img align="middle" src="img/downloading.gif">&nbsp;&nbsp;&nbsp;&nbsp;Transferring Photo(s) &nbsp;&nbsp;<text id="count"></div>');
+              
+          
+            //alert(PhotoCount);
+         document.getElementById('count').innerHTML = PhotoCount+1;
+                
+                
+            ft.upload(imageURI, "http://www.chardonlabs.com/ereportv4.nsf/prereport2/"+unid+"?savedocument", win, fail, options);
+           
+       
+}
+  
+function createXMLHttpRequest2() {
+    try { return new ActiveXObject("Msxml2.XMLHTTP"); } catch (e) {}
+    try { return new ActiveXObject("Microsoft.XMLHTTP"); } catch (e) {}
+    try { return new XMLHttpRequest(); } catch(e) {}
+    alert("XMLHttpRequest not supported");
+    return null;
+  }
+
+function winLast(r) {
+    
+
+    var httpLastPIC = createXMLHttpRequest2();
+    var docunid = localStorage.getItem("unid");
+    CurrentDocURL = "http://www.chardonlabs.com/ereportv4.nsf/prereport2/"+docunid+"?savedocument"
+   
+    params = "PhotoCount=Done"
+        //      alert("Current Doc: " + CurrentDocURL);
+   httpLastPIC.open("post", CurrentDocURL, true);
+   httpLastPIC.send(params);
+   
+   
+   
+   
+   
+   
+   httpLastPIC.onreadystatechange =   function()
+   { 
+     if(httpLastPIC.readyState  == 4)
+        {
+                      
+            if(httpLastPIC.status  == 200) 
+            {        
+                var t=setTimeout(" $('#progress').remove();",1000);
+                $('body').append('<div id="progress"><img align="middle" src="img/downloading.gif">&nbsp;&nbsp;&nbsp;&nbsp;Finishing Transfer</div>');
+                
+                
+            var tt=setTimeout(" $('#progress').remove();",2000);
+            var t=setTimeout(" $('#progress').remove();",2000);
+            var t=setTimeout("alert('Synch Completed!');",2000); //Last Picture has been Sent!
+            var daCustID2 = localStorage.getItem("custid");
+            
+           // alert("Now it is safe to remove the Completed eReport from the Device "+ daCustID2);
+            //Now it is safe to remove the Completed eReport from the Device 
+            
+        
+            var r=confirm("Remove from Device?");
+            if (r==true)
+              {
+                localDB.transaction(
+                        function (transaction) {
+                                transaction.executeSql("Delete From Reports where custid = '"+daCustID2+"'");
+                        }
+                );
+              }
+            else
+              {
+              //alert("You pressed Cancel!");
+              }
+
+            
+          
+            
+            
+            if (httpLastPIC.status == 0){
+                alert("Report NOT SENT. Error Communicating with Server.  Please try again when you have a better connection." );
+              
+               // show("SaveSendID");
+               }
+            
+            
+            
+            
+            }
+        }
+   }    
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+             // alert("Done!!");
+    
+    //$('#progress').remove();
+   
+    //alert("Synch Complete!");
+    //$('#progress').remove();
+    
+   // alert("Code = " + r.responseCode + " r: " +r.response);
+   
+    console.log("Code = " + r.responseCode);
+    console.log("Response = " + r.response);
+    console.log("Sent = " + r.bytesSent);
+}
+
+  function win(r) {
+    
+      winPhotoCount = localStorage.getItem("photoCounter" );
+      
+      
+     // alert("photo Sent" + winPhotoCount);
+     // alert("Code = " + r.responseCode + " r: " +r.response);
+      
+      console.log("Code = " + r.responseCode);
+      console.log("Response = " + r.response);
+      console.log("Sent = " + r.bytesSent);
+      
+      winPhotoCount = winPhotoCount -1
+      
+     
+      
+      localStorage.setItem("photoCounter", winPhotoCount );
+      
+    alert("Photos Remaining: " + winPhotoCount);
+   
+      
+      
+      if (winPhotoCount == 0){
+          
+         alert('call function to finish up');
+         
+         
+         winLast();
+          
+          }
+      
+      
+  }
+  
+
+  
+  
+
+  function fail(error) {
+      
+      //try to resend
+      var imageURI =  localStorage.getItem('imageURI');
+      var extensiontype =  localStorage.getItem('extensiontype');
+      var unid =  localStorage.getItem('unid');
+      var PhotoCount =  localStorage.getItem('PhotoCount');
+     
+      alert("An error has occurred sending Photo: " + imageURI);
+      
+      var r=confirm("Resend Photo?");
+      if (r==true)
+        {
+          uploadPhoto(imageURI, extensiontype, unid, PhotoCount)
+        }
+      else
+        {
+        //alert("You pressed Cancel!");
+        }
+      
+      
+      
+  }   
+
+function syncData(){
+			
+	alert("Contacting Server ...");
+	  $('body').append('<div id="progress"><img align="middle" src="img/downloading.gif">&nbsp;&nbsp;&nbsp;&nbsp;Synching with Server</div>');
+	
+	  //Hide the Save Send Button
+	  //hide("SaveSendID");
+  
+	  //Login after showing busy 
+	  login();
+	    
+	
+	localDB.transaction(
+	    function (transaction) {
+	        transaction.executeSql('SELECT * from Reports where STATUS = "Completed" ', [], dataHandlerServer, errorHandler);
+	    }
+	    
+	);
+} //end SyncData
+
+
+function errorHandler (){
+	$('#progress').remove();
+	alert("there was an error.");
+}
+
+
+
+function dataHandlerServer(transaction, results)
+	{
+
+	//alert("Number of Reports on device "+ results.rows.length);
+	if (results.rows.length==0)
+	 {
+			$('#progress').remove();
+			alert("No Reports to Sync");
+		return;
+	 }
+	    for (var i=0; i<results.rows.length; i++) {     
+	
+	
+	//regular expression to convert returns to ~ 
+		 var regex = new RegExp("\n", "g");
+		
+		 var row = results.rows.item(i);
+		 var CustID = row['custid'];
+		 
+		 localStorage.setItem("custid", CustID);
+		    
+		 
+	  	 var name  = escape(row['name']);
+		 var timestamp = row['timestamp'];
+		 var tech = escape(row['tech']);
+		 var ReportDate = escape(row['ReportDate']);
+		 var Contact = escape(row['Contact']);
+		 var regex3 = new RegExp(" ", "g");
+		 //try replace the spaces with the semicolon
+		 var notify = escape(row['notify'].replace(regex3, "; ")); 
+		 var BillAddr2 = escape(row['BillAddr2']);
+		 var BillCity = escape(row['BillCity']);
+		 var BILLState = escape(row['BILLState']);
+		 var BillZip = escape(row['BillZip']);
+		 var Conductivity = escape(row['Conductivity']);
+		 var calciumHardness = escape(row['calciumHardness']);
+		 var alkalinity = escape(row['alkalinity']);
+		 var chlorides = escape(row['chlorides']);
+		 var EquipType = escape(row['EquipType']);
+		 var EquipType= escape(row['EquipType'].replace(regex, ";")); 
+		 var EquipName = escape(row['EquipName'].replace(regex, ";")); 
+		 var EquipTest = escape(row['EquipTest'].replace(regex, ";")); 
+		 var EquipRange = escape(row['EquipRange'].replace(regex, ";")); 
+		 var EquipDataCollection = escape(row['EquipDataCollection'].replace(regex, ";")); 
+		 var Actions = escape(row['ActionsList']);
+		 var regex2 = new RegExp("\n", "+");
+	//use escape to normalize Signature Data
+		 var container = escape(row['container']);
+			// alert("Sig data" + container);
+		 var Status = row['Status'];
+		 var AccessGivenTo = escape(row['AccessGivenTo'].replace(regex, ";"));
+		 var regex4 = new RegExp("'", "g");
+		 var Comments = row['Comments']; // encode comments so they transfer via ajax ok
+		 Comments = escape(Comments);
+		 var mileage = escape(row['mileage']);
+				
+		//Photos - Limited to 6 per eReport	
+		var PhotoCount = 0;
+			var pic1 = row['Photo1'];
+			
+		//	alert("pic1 length " +pic1.length);
+			
+			if (pic1.length >1){PhotoCount=PhotoCount+1}
+			
+			var pic2 = row['Photo2'];
+		//	alert("pic2 length " +pic2.length);
+			if (pic2.length >1){PhotoCount=PhotoCount+1}
+			var pic3 = row['Photo3'];
+			
+		//	alert("pic3 length " +pic3.length);
+			
+			if (pic3.length >1){PhotoCount=PhotoCount+1}
+			var pic4 = row['Photo4'];
+	     //    alert("pic4 length " +pic4.length);
+	         
+			if (pic4.length >1){PhotoCount=PhotoCount+1}
+			var pic5 = row['Photo5'];
+	     //    alert("pic5 length " +pic5.length);
+			if (pic5.length >1){PhotoCount=PhotoCount+1}
+			var pic6 = row['Photo6'];
+	     //    alert("pic6 length " +pic6.length);
+			 if (pic6.length >1){PhotoCount=PhotoCount+1}
+			
+			 
+		     localStorage.setItem("photoCounter", PhotoCount);
+		     
+		     var photoCounter = PhotoCount;
+		         
+		      var t=setTimeout(" $('#progress').remove();",200);
+		      $('body').append('<div id="progress"><img align="middle" src="img/downloading.gif">&nbsp;&nbsp;&nbsp;&nbsp;Sending Data&nbsp;&nbsp;<text id="pCount"></div>');
+		     // document.getElementById('pCount').innerHTML = PhotoCount;
+			 
+			 //alert("Number of Photos to Send : " + PhotoCount);
+
+	
+	//		var latitude = row['Latitude'];
+		//	var longitude = row['Longitude'];
+
+//   Set The Time Values
+			var StartTime = row['StartTime'];
+		//	alert("StartTime " + StartTime);
+			
+			var EndTime = row['EndTime'];
+		//	alert("EndTime " + EndTime);
+			// Determine the timestamp or elapsed time
+			
+		
+
+			var stime = StartTime;
+			var etime = EndTime;
+			
+			var startDate = new Date (stime); //create Date object for Start Time
+			var endDate = new Date (etime); //create Date object for end Time
+
+			var minutes = endDate.getMinutes() - startDate.getMinutes();
+			//alert("minutes: " +minutes);
+
+			if (minutes < 10){
+			minutes = '0' + minutes;
+			};
+
+			var timestamp = endDate.getHours() - startDate.getHours() +":" + minutes;
+
+			var ListType = escape(row['ListType']);
+			//alert("ListType from Report Table: "+ ListType);
+		
+			
+			
+	//Call the Send Reports
+			
+			//alert("before createDoc");
+ createDoc (CustID, name, timestamp, tech, ReportDate, Contact, notify, BillAddr2, BillCity, BILLState, BillZip, Conductivity, calciumHardness, alkalinity, chlorides, EquipType, EquipName, EquipTest,  EquipRange, EquipDataCollection,  Actions, container, Status, AccessGivenTo, Comments, mileage, pic1, pic2, pic3, pic4, pic5, pic6, StartTime, EndTime, ListType, PhotoCount);
+			// createDoc (CustID, name, timestamp, tech, ReportDate, Contact, notify, BillAddr2, BillCity, BILLState, BillZip, Conductivity, calciumHardness, alkalinity, chlorides, EquipType, EquipName, EquipTest,  EquipRange, EquipDataCollection,  Actions, container, Status, AccessGivenTo, Comments, mileage, pic1, latitude, longitude);
+						
+	}
+
+
+function createDoc (CustID, name, timestamp, tech, ReportDate, Contact, notify, BillAddr2, BillCity, BILLState, BillZip, Conductivity, calciumHardness, alkalinity, chlorides, EquipType, EquipName, EquipTest,  EquipRange, EquipDataCollection,  Actions, container, Status, AccessGivenTo, Comments, mileage, pic1, pic2, pic3, pic4, pic5, pic6, StartTime, EndTime, ListType, PhotoCount)
+	//function createDoc (CustID, name, timestamp, tech, ReportDate, Contact, notify, BillAddr2, BillCity, BILLState, BillZip, Conductivity, calciumHardness, alkalinity, chlorides, EquipType, EquipName, EquipTest,  EquipRange, EquipDataCollection,  Actions, container, Status, AccessGivenTo, Comments, mileage, pic1, latitude, longitude)
+	
+	{
+   // $('body').append('<div id="progress"><img align="middle" src="img/downloading.gif">&nbsp;&nbsp;&nbsp;&nbsp;Creating eReports</div>');
+     
+//alert("in CreateDoc");
+	//alert("Pic1:  "+pic1);
+	
+	
+	
+	   /////////////////////////////////////////////////
+	   //Added Version  Number
+	   //////////////////////////////////////////////////////////
+       var Version = localStorage.getItem('Version');
+	   
+		
+	//alert("Creating & Sending Doc "+ name); 
+       var httpBU = createXMLHttpRequest();
+       var httpPIC = createXMLHttpRequest();
+	//alert("httpBU created");
+	//var http = createXMLHttpRequest();
+
+
+	function createXMLHttpRequest() {
+	  try { return new ActiveXObject("Msxml2.XMLHTTP"); } catch (e) {}
+	  try { return new ActiveXObject("Microsoft.XMLHTTP"); } catch (e) {}
+	  try { return new XMLHttpRequest(); } catch(e) {}
+	  alert("XMLHttpRequest not supported");
+	  return null;
+	}
+	
+	 
+	/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	// Change when production
+	
+//	var backupURL = "http://www.chardonlabs.com/R2D2.nsf/prereport?createdocument";
+	
+	var backupURL = "http://www.chardonlabs.com/eReportv4.nsf/prereport2?createdocument";
+    //	http.open("post", URL, true);
+	httpBU.open("post", backupURL, true);
+
+	//   params = "ServicesPerformed="+Comments+"&photo1="+pic1+"&photo2="+pic2+"&photo3="+pic3+"&photo4="+pic4+"&photo5="+pic5+"&photo6="+pic6+"&custid="+CustID+"&billname="+name+"&ts="+timestamp + "&tech="+tech +"&ReportDate=" + ReportDate+"&BILLADDR1="+Contact+"&notify="+notify +"&BILLADDR2="+BillAddr2 +"&BillCity="+BillCity+"&BILLSTATE="+ BILLState+"&BillZip="+BillZip + "&Conductivity="+Conductivity + "&calciumHardness="+calciumHardness+"&alkalinity=" + alkalinity + "&chlorides="+ chlorides +"&parseEquipType=" + EquipType + "&parseEquipName="+ EquipName+ "&parseEquipTestNames="+ EquipTest+"&parseRange="+EquipRange +"&equipDataCollection="+ EquipDataCollection +"&actionslist="+ Actions + "&Storage=" +container+"&status="+Status+"&mileage="+mileage+"&StartTime="+StartTime+"&EndTime="+EndTime+"&Version="+Version+"&accessGivenTo=" + AccessGivenTo;
+	//signature gets sent with the data in the container field
+	   params = "PhotoCount="+PhotoCount+"&ServicesPerformed="+Comments+"&Storage=" +container+"&custid="+CustID+"&billname="+name+"&ts="+timestamp + "&tech="+tech +"&ReportDate=" + ReportDate+"&BILLADDR1="+Contact+"&notify="+notify +"&BILLADDR2="+BillAddr2 +"&BillCity="+BillCity+"&BILLSTATE="+ BILLState+"&BillZip="+BillZip + "&Conductivity="+Conductivity + "&calciumHardness="+calciumHardness+"&alkalinity=" + alkalinity + "&chlorides="+ chlorides +"&parseEquipType=" + EquipType + "&parseEquipName="+ EquipName+ "&parseEquipTestNames="+ EquipTest+"&parseRange="+EquipRange +"&equipDataCollection="+ EquipDataCollection +"&actionslist="+ Actions + "&status="+Status+"&mileage="+mileage+"&StartTime="+StartTime+"&EndTime="+EndTime+"&Version="+Version+"&accessGivenTo=" + AccessGivenTo;
+	   
+	httpBU.send(params);
+	httpBU.onreadystatechange =   function()
+	    { 
+	    
+	   // alert("readystate "+ httpBU.readyState);
+	    
+		if(httpBU.readyState  == 2)
+        {
+		//		$('body').append('<div id="progress"><img align="middle" src="img/downloading.gif">&nbsp;&nbsp;&nbsp;&nbsp;Data Sent</div>');
+        }
+		
+		if(httpBU.readyState  == 3)
+        {
+			//	$('body').append('<div id="progress"><img align="middle" src="img/downloading.gif">&nbsp;&nbsp;&nbsp;&nbsp;Data Received - OK</div>');
+				//$('#progress').remove();
+        }
+		
+	         if(httpBU.readyState  == 4)
+	         {
+	                       
+	             if(httpBU.status  == 200) {
+	                  result = httpBU.responseText;
+	              //alert(result);
+	                  lastposition = result.lastIndexOf("####");
+	                  // alert("lastposition"+ lastposition);
+	                  //The WQS Agent publishes the DocUNID after ####
+	                  unid = result.substr(lastposition-32,32);
+	                  //save locally
+	                  localStorage.setItem("unid", unid);
+	                  
+	                  //Save the Unid to the Latitiude field
+	                  //If there a value 
+	             //   alert(unid);
+	               // alert(CustID);
+	                   // saveReport2 (CustID, "Latitude", unid );
+	                   // alert(unid);             	                  
+	                  //After Unid I tell the PhotoCount for the Remaining number of Photos to be Sent
+	                  
+	                  CurrentDocURL = "http://www.chardonlabs.com/ereportv4.nsf/prereport2/"+unid+"?savedocument"
+	                  
+	                  
+	                  
+	                  //var tt=setTimeout(" $('#progress').remove();",200);       
+	      //$('body').append('<div id="progress"><img align="middle" src="img/downloading.gif">&nbsp;&nbsp;&nbsp;&nbsp;Data OK</div>');
+	        
+	            
+	             
+	                  
+	                  alert("Before 1st photo - PhotoCount: "+ PhotoCount);
+	                  
+	                  if (pic1.length >1){   
+	                  uploadPhoto(pic1, "jpg", unid,0);
+	                  //alert("photo 1 has been sent");
+	                   }
+	                  
+	                  
+	                  pc = localStorage.getItem("photoCounter");
+	                  alert("pc " + pc )
+	                  
+	                  While (pc>5)
+	                  
+	          
+                      if (pic2.length >1){             
+                          uploadPhoto(pic2, "jpg", unid,1);
+                      }
+	                  
+                                  
+                      if (pic3.length >1){
+                          uploadPhoto(pic3, "jpg", unid,2);
+                          }
+                      
+                    
+                      if (pic4.length >1){
+                         uploadPhoto(pic4, "jpg", unid,3);
+                          }  
+               
+                   
+                      if (pic5.length >1){
+                          uploadPhoto(pic5, "jpg", unid,4);
+                          }
+                      
+                      if (pic6.length >1){
+                          uploadPhoto(pic6, "jpg", unid, 5);
+                          }
+                      
+                      
+                     
+                      
+	                  var thePhotoCounter = localStorage.getItem("photoCounter")
+	               //  alert("thePhotoCounter is"+ thePhotoCounter);
+	                  
+	                  //If there are no photos to be sent set the Done Flag
+	                 
+	                 
+	                  
+	                  // Need to re-work to account for deleted pics 
+	                  if (thePhotoCounter == 0){
+	              
+	                  params = "PhotoCount=Done"
+	                        //      alert("Current Doc: " + CurrentDocURL);
+	                              httpPIC.open("post", CurrentDocURL, true);
+	                              httpPIC.send(params);
+	                  
+	                  var t=setTimeout("alert('Synch Complete! ');",2000);
+	                  var t=setTimeout("$('#progress').remove();",2000);
+	                  }
+	                              
+	                  //Shrink the list
+	               // alert("calling remove report");
+	               // removeReport(CustID, ListType);
+	                
+	                
+	                  //Unhide the Save Send Button
+	                //  show("SaveSendID");
+	              } 
+	             
+	               //   alert("Received:"  + http.responseText); 
+	              else 
+	            	 $('#progress').remove();
+	             // alert("success"+ httpBU.status);
+	         
+	              if (httpBU.status == 0){
+	               alert("Report NOT SENT. Error Communicating with Server.  Please try again when you have a connection." );
+	             
+	              // show("SaveSendID");
+	              }
+	         
+	         }
+           
+	    }; 
+
+	    httpPIC.onreadystatechange =   function(){	        
+	       //alert("httpPIC: "+ httpPIC.status);
+	     //  alert("calling remove report - currently REMMED OUT! line 586 sync.js");
+           
+	        if(httpPIC.readyState  == 4){
+	        
+	        if(httpPIC.status  == 200)
+	            {
+	              //alert("calling remove report - currently REMMED OUT! line 586 sync.js");
+	            //    
+	              
+	              
+	              var r=confirm("Remove from Device?");
+	              if (r==true)
+	                {
+	                  removeReport(CustID, ListType);
+	                }
+	              else
+	                {
+	                alert("You pressed Cancel!");
+	                }
+
+	              
+	              
+	            }
+	        }
+	    }
+	    
+
+	    function removeReport(CustID, ListType){
+            //alert("cust "+ CustID+ " " + ListType);
+       //     alert("Removing report from local db " + CustID + " " +ListType);
+
+            if (ListType=="shrinkingList"){  
+            
+            localDB.transaction(
+                function (transaction) {
+	    
+                        //Shrink the Shrinking List
+                        transaction.executeSql("Select * From ShrinkingList where custid = '"+CustID+"'", [], dataHandlerShrink, errorHandler)
+                              });
+            }
+            
+            //If  in the Book View 
+            
+            /*
+            if (ListType=="onDevice"){    
+            //  alert("in remove report");
+                //alert("ListType from Report Table: "+ ListType);
+                transaction.executeSql("Delete From ShrinkingList where custid = '"+CustID+"'");
+                     //transaction.executeSql("Delete From ShrinkingList where custid = '"+CustID+"' where Limit=1");
+            };
+            */
+         
+            
+       //Remove from Reports Table   
+     //     alert("CustID "+CustID);
+            localDB.transaction(
+                    function (transaction) {
+                            transaction.executeSql("Delete From Reports where custid = '"+CustID+"'");
+                    }
+            );
+          
+            
+            
+	    }
+	
+	    
+	    
+	    function dataHandlerShrink(transaction, results)
+	    {
+	
+	        //Shrink the List on the Phone by 1 
+	        //If there are multiple templates per customer it will delet only the 1st on it finds
+	      
+	        
+	        //  for (var i=0; i<results.rows.length; i++) {
+	            
+	         //   alert(results.rows.length); 
+	            
+	        
+	                // Each row is a standard JavaScript array indexed by     
+	            var row = results.rows.item(0);    
+	           id  = row['id'];
+	           //alert("id: "+id);
+	           
+	           transaction.executeSql("Delete From ShrinkingList where id = '"+id+"'");	           
+	           
+	           
+	          // alert("Shrinking List");
+	           
+	           //rebuild the picklist
+	           //loadSL();
+	           
+	           
+	        //   }
+	         
+	       
+	        }
+	    }
+
+ 
+
+
+}
+		
+
+	function responseFunction(){
+	//alert("response : "+ http.responseText);
+	};
+
+	
+
+	
+	
+	//Count the Reports on Phone
+	/* Commented out
+	document.getElementById('CompCount_s1').innerHTML =  "";
+
+	localDB.transaction(
+	    function (transaction) {
+	        transaction.executeSql("SELECT * from Reports", [], dataHandlerCompCount, errorHandler);
+	    }
+	    
+	);
+*/
+	
+	function dataHandlerCompCount(transaction, results)
+	{
+	document.getElementById('CompCount_s1').innerHTML = "";
+	  document.getElementById('CompCount_s1').innerHTML = results.rows.length; 
+	   
+	}
+	
+
+	function clearCurrentReport (){
+		//alert("in Clear Report");
+		//$('#progress').remove();
+	
+		
+	//Erase Values from Fields		
+		
+	//var x=document.getElementById("customer_templates");
+	//alert(x.selectedIndex);
+
+	//x.remove(x.selectedIndex);
+	//alert("Save Completed for: ");
+	frm = document.forms[0];
+	
+	//alert(document.forms[0].Conductivity.value);
+	frm.Conductivity.value="";
+	frm.calciumHardness.value="";
+	frm.alkalinity.value="";
+	frm.chlorides.value="";
+	frm.parseEquipType.value = "";
+	frm.parseEquipName.value="";
+	frm.parseEquipTestNames.value="";
+	frm.parseRange.value="";
+	
+	frm.equipDataCollection.value = "";
+	frm.LastMonthEquipDataCollection.value = "";
+	frm.LastMonthEquipDataCollection2.value = "";
+	frm.LastMonthEquipDataCollection3.value = "";
+	frm.PDAEquipTest.value="";
+	frm.PDAEquipRange.value="";
+	frm.pdaDataCollection.value="";
+	frm.Comments.value="";
+	frm.mileage.value="";
+	
+	//Clear out previous Signature
+	var storage = localStorage.setItem("canvas", "");
+	//alert("Clear Current Report executed");
+
+	}
+
+	
+	//Used by the Sync button on index.html
+	function syncData2(){
+        
+	    alert("Contacting Server ...");
+	      $('body').append('<div id="progress"><img align="middle" src="img/downloading.gif">&nbsp;&nbsp;&nbsp;&nbsp;Synching with Server</div>');
+	    
+	      //Hide the Save Send Button
+	      //hide("SaveSendID");
+	      
+	      //Login after showing busy 
+	      login();
+	      
+	    
+	    localDB.transaction(
+	        function (transaction) {
+	            transaction.executeSql('SELECT * from Reports where STATUS = "Completed" ', [], dataHandlerServer, errorHandler);
+	        }
+	        
+	    );
+	} //end SyncData
+	

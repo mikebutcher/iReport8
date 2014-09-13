@@ -1,0 +1,40 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<title>Chardon Labs - Login</title><meta name = "viewport" content = "width = 320,         initial-scale = 2.3, user-scalable = no"> 
+<script language="JavaScript" type="text/javascript">
+<!-- 
+var NN4 = (document.layers) ? true : false;// required for NN4 to reliably capture key eventsif (NN4) document.captureEvents(Event.KEYPRESS)document.onkeypress = function (event) {  checkEnter(event)  return true}function setFormFocus() {	document.forms[0].Username.focus(); 	document.forms[0].Username.select();}//submit the form if the user presses the ENTER keyfunction checkEnter(event){ 		var code = 0		if (NN4) {		code = event.which	} else {		code = window.event.keyCode	}			if (code==13)		document.forms[0].submit()}
+// -->
+</script>
+</head>
+<body text="#000000" bgcolor="#FFFFFF" onload="var useragent = document.forms[0].HTTP_User_Agent.value;var isAndroid = document.forms[0].IsAndroid.value;//alert(isAndroid);if(isAndoid) {document.getElementById(&quot;blurb&quot;).style.display = &quot;none&quot;;document.getElementByid(&quot;logo&quot;).style.display=&quot;none&quot;;}//document.getElementById(&quot;blurb&quot;).style.display = &quot;none&quot;;//document.getElementById(&quot;HeaderStuff&quot;).style.display = &quot;none&quot;;">
+
+<form method="post" action="/names.nsf?Login" name="_DominoForm">
+<input type="hidden" name="%%ModDate" value="FFFFFFFF2CC49408"><font size="2" face="Arial">
+<input name="RedirectTo" value="/eReportV4.nsf/Rarrow.gif" type=hidden></font><br>
+<img src="/domcfg.nsf/a5f213b09e138b72052566b20068aa38/$Body/0.2322?OpenElement&amp;FieldElemFormat=gif" width="36" height="48"><b> </b><b><font face="Verdana">Welcome to Chardon Labs</font></b><br>
+<font size="2" face="Arial">Home</font><br>
+<b><font face="Arial">Please identify yourself:</font></b><br>
+<p><font size="2" face="Arial">  Username</font><br>
+<font size="2" face="Arial">  </font><font size="2" face="Arial">
+<input name="Username" value="" size=20 maxlength=50 autocomplete=off></font><br>
+<font size="2" face="Arial">  Password</font><br>
+<font size="2" face="Arial">  </font><font size="2" face="Arial">
+<input name="Password" value="" type="password" size=20 maxlength=50 autocomplete=off></font>
+ 
+<input type="submit" value="Sign In"><font size="2" face="Arial">	</font><div id="blurb">
+<br><br>Chardon Lab's cutting edge customer report delivery system.  From this site you can view reports generated from our eReport mobile application in various formats.  You have probably seen our technicians at your site carrying a handheld computer.  The handheld is where the eReport starts.  Our technicians use a handheld to collect all of the same information they previously would have written on paper before eReports.<br><br>
+There are multiple advantages to this new way of data collection.<br><br>
+
+<li>Complex formulas are automated, allowing our techs to spend more time on analysis and execution and eliminating any chance for error.  This assures that our techs can make the proper adjustments.</li>
+<li>Data is automatically sent back to the Chardon servers and reports are available immediately for you to see, without waiting for the Tech to key the data in.</li>
+<li>Your data is now housed in a consistent format on our servers.  This makes reporting, comparing and analysing a much simpler and productive task.</li>
+<li>All of this adds up to savings in time and money, allowing us to deliver a better service than our competition while keeping rates comparable.</li>
+</div><div align="center"><br>
+</td>
+</tr>
+</table></div><br>
+</form>
+</body>
+</html>

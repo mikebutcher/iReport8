@@ -1,0 +1,152 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta name="viewport" content="width=320 user-scalable=no" />
+<meta http-equiv="Content-type" content="text/html; charset=utf-8">
+<title>iReport</title>
+<link rel="stylesheet" href="css/stylemaster.css1" type="text/css" media="screen" title="no title" charset="utf-8">
+
+<script type="text/javascript" charset="utf-8" src="phonegap.js"></script>
+<script type="text/javascript" charset="utf-8" src="js/iReport.js"></script>
+
+
+<link rel="stylesheet" href="jq/jquery.mobile-1.0.css" />
+<script src="jq/jquery.js"></script>
+
+<script src="jq/jquery.mobile-1.1.js"></script>
+
+<script type="text/javascript" charset="utf-8">
+    // Wait for PhoneGap to load
+    //
+    function onLoad() {
+
+        document.addEventListener("deviceready", onDeviceReady, false);
+        
+          var tech =	 localStorage.getItem("tech");
+          //alert(tech);
+
+           var pw =	 localStorage.getItem("password");
+          //alert(pw);
+
+          
+    //alert("Found stored credentials "+tech + " " + pw);
+    
+    
+         var TheTech = localStorage.getItem("tech");
+         //alert(TheTech);
+		document.getElementById('TechNameOptions').innerHTML = TheTech;
+    
+        
+    }
+    // PhoneGap is ready
+    //
+    function onDeviceReady() {
+        // Empty
+    	 initWEBDB();
+    	 //setupUser();
+  	  	     	 
+    }
+   
+
+    </script>
+
+
+
+<script type="text/javascript" charset="utf-8">
+
+   function saveUser(){
+   
+   		alert(document.forms[0].techList.selectedIndex.value);
+   		
+   		
+   		
+		localStorage.setItem("tech", document.forms[0].username.value);
+		//alert(document.forms[0].password.value);
+		localStorage.setItem("password", document.forms[0].password.value);
+		
+		}
+		
+  function setTech(daTech){
+		localStorage.setItem("tech", daTech);
+		//alert(daTech);
+   }
+		
+		function clearTech(){
+		localStorage.setItem("tech", '');
+		
+   }
+		
+	function getAdminPW(){
+		
+		password=prompt('Enter password:',' ');
+
+			if (password=="mike" || password=="pingisgood" || password=="r2d2")
+ 				{
+  				document.getElementById('actAs').style.display = "";
+  				document.getElementById('adminButton').style.display = "none";
+  				}
+			else
+   				{
+   				alert('Password Incorrect!');
+  				return
+    }
+		
+		}
+		
+		
+
+		
+		function doLogin(){	
+	
+			//Set the tech name based on who is logged in
+			name = localStorage.getItem("username");
+			pw = localStorage.getItem("password");
+		 daLogin = doDominoLogin(name, pw); // ajaxLogin.js
+		 
+		// $("#progress").remove();
+		 
+		}
+		
+      </script>
+
+
+</head>
+<body onload="onLoad();" id="stage" class="theme">
+<p></p>
+
+<table border="0" cellspacing="0" cellpadding="0">
+	<tr valign="top">
+		<td width="351" colspan="3"><center><img style="width: 35px; height: 40px; float: left; padding-top: .1cm; padding-right: .5cm; padding-left: .5cm;"
+			id="logo" src="img/logo.png" onClick="updateCounts();" /> </center>
+		<h1>Setup</h1>
+
+		<font size="2" face="Verdana">
+		<p align='right'>Logged in as: <text id='TechNameOptions'></text></p>
+		</font></td>
+	</tr>
+
+</table>
+
+
+
+
+
+
+
+
+<p>
+
+<input type="button" data-icon="alert" data-iconpos="right" onclick="resetDB();" value= "Initialize DB">
+</br>
+<input type="button" data-icon="star" data-iconpos="right"  onclick="clearTech();alert('Tech Reset');" value= "Reset Tech">
+</br>
+<input type="button" data-icon="refresh" data-iconpos="right" onclick="alert('restore Report');window.location='restore.html'" value= "Restore Report from Device">
+</br>
+<input type="button" data-icon="alert" data-iconpos="right" onclick="resetDB2();" value= "Clear Saved Reports - Danger!">
+</br>
+<input data-icon="home" data-iconpos="right" type="button" onclick="window.location='index.html' " value= "Home">
+
+
+
+</body>
+</html>

@@ -1,0 +1,80 @@
+<!DOCTYPE html> 
+<html> 
+	<head> 
+		<title>iReport Setup</title> 
+	
+		<meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, maximum-scale=1.0" />
+		
+			<link rel="stylesheet" href="jq/jquery.mobile-1.0.css" />
+		<link rel="stylesheet" href="css/stylemaster.css" type="text/css" media="screen" title="no title" charset="utf-8">
+	
+		<script src="jq/jquery.js"></script>
+	
+		<script src="jq/jquery.mobile-1.0.js"></script>
+		
+		<script type="text/javascript" charset="utf-8" src="js/iReport.js"></script>
+		<script src="js/setup.js">
+	
+		</script>
+	</head> 
+	<body> 
+	<form>
+	<div data-role="page" data-theme="d">
+	<div>.</div>
+						<div data-role="header" data-theme="c" data-position="fixed" >
+								<a href="index.html" data-ajax="false" data-icon="home" data-theme="d">Home</a>
+									<center><img src="img/logo.png" alt="Chardon Logo" height="35px" width="30px" ></br><h2>Chardon Labs - iReport iOS7</h2></img></center>
+								<a href="#" data-theme="c" id="TechNameOptions" ></a>
+																														
+						</div><!-- /header -->
+
+		<div data-role="content" data-theme="f">	
+		<center><h2>Initial Setup </h2></center>
+		<div id="userSetup" >
+		
+		<h2> Username
+		
+		<input id = "Username" name="Username" value="" size=30 maxlength=50 autocomplete=off>
+		Password
+		
+		<input id = "Password" name="Password" value="" type="password" size=30 maxlength=50 autocomplete=off>
+		
+		</h2>
+		</br>
+		<input type="button"  data-theme="c"  data-ajax="false" id="initial_setup" value=" Sign In ">
+		</br>
+		</br>
+	<center>
+	iOS7 5.22.14
+	</center>
+
+		
+		</div>
+		<div id="actAs" style="display: none">
+
+
+		<fieldset><h2>Admin - Act As</h2>
+
+
+
+		<h3>Please choose: <select name="techList"
+			onchange="document.getElementById('TechNameOptions').innerHTML =this.options[this.selectedIndex].value; setTech(this.options[this.selectedIndex].value);  "
+			id="techList"></h3>
+		<option>Please Choose....</select>
+
+		<p>
+	
+		<a href="index.html" data-role="button" data-ajax="false" data-theme="a"  >Done</a>
+		</fieldset>
+		</div>
+  
+		</div><!-- /content -->
+
+	
+	</div><!-- /page -->
+
+	</body>
+	</form>
+</html>
+
+

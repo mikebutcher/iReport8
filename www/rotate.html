@@ -1,0 +1,63 @@
+<!DOCTYPE HTML>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Rotate Canvas</title>
+<script type="text/javascript">
+function rotate(p_deg)
+{
+
+ switch(p_deg) {
+     default :
+     case 0 :
+  canvas.setAttribute('width', image.width);
+  canvas.setAttribute('height', image.height);
+  canvasContext.rotate(p_deg * Math.PI / 180);
+  canvasContext.drawImage(image, 0, 0);
+  var ImgData = canvas.toDataURL();
+  alert(ImgData);
+  
+  break;
+     case 90 :
+  canvas.setAttribute('width', image.height);
+  canvas.setAttribute('height', image.width);
+  canvasContext.rotate(p_deg * Math.PI / 180);
+  canvasContext.drawImage(image, 0, -image.height);
+  var ImgData2 = canvas.toDataURL();
+  alert(ImgData2);
+  break;
+     case 180 :
+  canvas.setAttribute('width', image.width);
+  canvas.setAttribute('height', image.height);
+  canvasContext.rotate(p_deg * Math.PI / 180);
+  canvasContext.drawImage(image, -image.width, -image.height);
+  break;
+     case 270 :
+     case -90 :
+  canvas.setAttribute('width', image.height);
+  canvas.setAttribute('height', image.width);
+  canvasContext.rotate(p_deg * Math.PI / 180);
+  canvasContext.drawImage(image, -image.width, 0);
+  break;
+ };
+}
+</script>
+</head>
+<body>
+<p>
+rotate:
+    <input type="button" value="0Â°"  onclick="rotate(0);" />
+    <input type="button" value="90Â°"  onclick="rotate(90);" />
+    <input type="button" value="180Â°"  onclick="rotate(180);" />
+    <input type="button" value="-90Â°"  onclick="rotate(-90);" />
+</p>
+<canvas id="canvas">Your Browser doesn't support canvas</canvas>
+<p> Orginal Image</p>
+<img id="image" src="http://2.bp.blogspot.com/-FpBpfkjAKjU/UGWx0vXYzzI/AAAAAAAADtg/mS0b8WtQbbk/s320/Karva+Chauth.jpg" alt="" />
+<script type="text/javascript">
+var image = document.getElementById('image');
+var canvas = document.getElementById('canvas');
+var canvasContext = canvas.getContext('2d');
+canvasContext.drawImage(image, 10, 10);
+</script>
+</body>
+</html>

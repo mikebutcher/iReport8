@@ -1,0 +1,297 @@
+
+#daSLCnt.ui-btn-active {
+    background:#61B329 !important;
+}
+#daBVCnt.ui-btn-active {
+    background:#61B329 !important;
+}
+#GetOD.ui-btn-active {
+    background:#61B329 !important;
+}
+
+textarea {
+    white-space: nowrap;
+    overflow:    scroll;
+    overflow-y:  scroll;
+    overflow-x:  scroll;
+  
+   }
+
+  
+#sigDone {
+	font-family: Arial;
+	-webkit-border-radius: 10px;
+    font-size:1.5em /* Bigger text */
+
+}
+
+#sigReset {
+	font-family: Arial;
+	-webkit-border-radius: 10px;
+    font-size:1.5em /* Bigger text */
+
+}
+  
+#Comments {
+   white-space: normal;
+   }
+   
+
+#EquipList{
+	font-size: 25px;
+	text-align: center;
+}
+
+
+#customer_templates{
+	width:310px;
+	
+	text-overflow: ellipsis; 
+	overflow: hidden; 
+	white-space:nowrap; 
+	
+	font-size: 20px;
+	text-align: center;
+}
+
+#RangeName{
+	font-size: 15px;
+	text-align: left;
+}
+
+#daData{
+	font-size: 15px;
+	text-align: left;
+}
+
+
+body {
+
+	background: #FFFFFF none repeat scroll 0 0;
+	color: #000000;
+	font-family: Helvetica;
+	font-size: 72%;
+	line-height: 1.5em;
+	margin: 0;
+	border-top: 1px solid #393939;
+	vertical-align: middle;
+
+}
+
+text.daClient {
+	color: black;
+	font-size: 22;
+}
+
+#progressWhite {
+	font-family: Arial;
+	-webkit-border-radius: 10px;
+	background-color: rgba(255, 255, 255, .7);
+	color: black;
+	font-size: 25px;
+	font-weight: bold;
+	height: 80px;
+	left: 10px;
+	line-height: 80px;
+	margin: 0 auto;
+	position: absolute;
+	text-align: center;
+	top: 120px;
+	width: 300px;
+}
+
+#progress{
+	font-family: Arial;
+	-webkit-border-radius: 10px;
+	background-color: rgba(0, 0, 0, .7);
+	color: white;
+	font-size: 15px;
+	font-weight: bold;
+	height: 80px;
+	left: 10px;
+	line-height: 80px;
+	margin: 0 auto;
+	position: absolute;
+	text-align: center;
+	top: 120px;
+	width: 300px;
+}
+
+
+#h1 {
+	-webkit-border-radius: 10px;
+	background-color: #C0C0C0;
+	color: black;
+	font-size: 16px;
+	font-weight: bold;
+}
+
+#preview {
+	font-family: Arial;
+	-webkit-border-radius: 10px;
+	background-color: #C0C0C0;
+	color: black;
+	font-size: 18px;
+	font-weight: bold;
+	text-decoration: none;
+	left: 7px;
+	position: relative;
+	text-align: center;
+	top: 35px;
+	width: 302px;
+}
+
+#Begin {
+	top: 65px;
+	position: relative;
+}
+
+#Home {
+	top: 65px;
+	position: relative;
+}
+
+#info {
+	background: #ffa;
+	border: 1px solid #ffd324;
+	-webkit-border-radius: 5px;
+	border-radius: 5px;
+	clear: both;
+	margin: 15px 6px 0;
+	width: 295px;
+	padding: 4px 0px 2px 10px;
+}
+
+#info>h4 {
+	font-size: .95em;
+	margin: 5px 0;
+}
+
+#stage.theme {
+	padding-top: 3px;
+}
+
+/* Definition List */
+#stage.theme>dl {
+	padding-top: 10px;
+	clear: both;
+	margin: 0;
+	list-style-type: none;
+	padding-left: 10px;
+	overflow: auto;
+}
+
+#stage.theme>dl>dt {
+	font-weight: bold;
+	float: left;
+	margin-left: 5px;
+}
+
+#stage.theme>dl>dd {
+	width: 45px;
+	float: left;
+	color: #a87;
+	font-weight: bold;
+}
+
+/* Content Styling */
+#stage.theme>h1,#stage.theme>h2,#stage.theme>p {
+	margin: 1em 0 .5em 13px;
+}
+
+#stage.theme>h1 {
+	color: #000000;
+	font-size: 1.6em;
+	text-align: center;
+	margin: 0;
+	margin-top: 15px;
+	padding: 0;
+}
+
+#stage.theme>h2 {
+	clear: both;
+	margin: 0;
+	padding: 3px;
+	font-size: 1em;
+	text-align: center;
+}
+
+/* Stage Buttons */
+#stage.theme a.btn {
+	border: 1px solid #555;
+	-webkit-border-radius: 5px;
+	border-radius: 5px;
+	text-align: center;
+	display: block;
+	float: left;
+	background: #62B1F6;
+	width: 150px;
+	color: #000000;
+	font-size: 2.0em;
+	text-decoration: none;
+	padding: 1.2em 0;
+	margin: 3px 0px 3px 5px;
+}
+
+#stage.theme a.btn.large {
+	width: 308px;
+	padding: 1.2em 0;
+}
+
+#stage.theme a.btn.largeGreen {
+	background: #A4C639;
+	width: 308px;
+	padding: 1.2em 0;
+}
+#stage.theme a.btn.smallGreen {
+	background: #A4C639;
+	width: 90px;
+	height: 15px;
+	padding: 1.2em 0;
+}	
+#stage.theme a.btn.medGreen {
+	background: #A4C639;
+	width: 180px;
+	height: 15px;
+	padding: .5em 0;
+}
+#stage.theme input.btn.Nav {
+	width: 100px;
+	height: 65px;
+	padding: 1.3em 0;
+}
+
+#stage.theme input.btn.NavSmall {
+	width: 100px;
+	height: 33px;
+	padding: 0.3em 0;
+}
+
+
+#stage.theme a.btn.largeRed {
+	background: #FF0000;
+	width: 308px;
+	padding: 1.2em 0;
+}
+
+#stage.theme a.btn.smallRed {
+	background: #FF0000;
+	width: 150px;
+	padding: 1.2em 0;
+}
+
+#stage.theme select.btn.large {
+	border: 1px solid #555;
+	-webkit-border-radius: 5px;
+	border-radius: 5px;
+	text-align: center;
+	display: block;
+	float: left;
+	background: #A4C639;
+	color: #000000;
+	font-size: 1.5em;
+	text-decoration: none;
+	margin: 3px 0px 3px 5px;
+	width: 308px;
+	padding: 1.2em 0;
+}
