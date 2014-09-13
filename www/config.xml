@@ -32,10 +32,15 @@ Mike Butcher
     <param name="ios-package" value="CDVInAppBrowser" />
 </feature>
 
-<preference name="fullscreen" value="true" />
-
-<preference name="orientation" value="default" />
-<preference name="webviewbounce" value="false" />
 
 
+
+	<access origin="*" />
+    <preference name="fullscreen" value="true" />
+    <preference name="webviewbounce" value="false" />
+    <preference name="UIWebViewBounce" value="false" />
+    <preference name="DisallowOverscroll" value="true" />
+	<preference name="fullscreen" value="true" />
+	<preference name="orientation" value="default" />
+	
 </widget>
