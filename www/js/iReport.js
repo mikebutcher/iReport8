@@ -10,9 +10,10 @@ localStorage.setItem('photocount', 1);
 
 
 ///Production Templates
+//BookView Pulled from Customer 2 Database
 
 slURL = "http://www.chardonlabs.com/eReportv4.nsf/JSONTemplatesCATsingle2?ReadViewEntries&count=500&RestrictToCategory=" + techname + "&outputformat=json";
-bvURL = "http://www.chardonlabs.com/eReportv4.nsf/JSONBookView2?ReadViewEntries&count=500&RestrictToCategory=" + techname + "&outputformat=json";
+bvURL = "http://www.chardonlabs.com/Customer2.nsf/JSONBookView2?ReadViewEntries&count=500&RestrictToCategory=" + techname + "&outputformat=json";
 
 //Technicians List from Keywords        
 tlURL = "http://www.chardonlabs.com/CUSKEY.NSF/(json)?ReadViewEntries&count=500&RestrictToCategory=service+techs&outputformat=json"
@@ -25,17 +26,44 @@ tlURL = "http://www.chardonlabs.com/CUSKEY.NSF/(json)?ReadViewEntries&count=500&
 
 
 //10-17-13  Change back to 100 -->200
-histURL = "http://www.chardonlabs.com/eReportv4.nsf/iPhoneHistory2?ReadViewEntries&count=200&RestrictToCategory=" + techname + "&outputformat=json";
+histURL = "http://www.chardonlabs.com/eReportv4.nsf/iPhoneHistory2?ReadViewEntries&count=5&RestrictToCategory=" + techname + "&outputformat=json";
 
+
+function getTemplates() {
+     var username = localStorage.getItem("username");
+     var pw = localStorage.getItem("password");
+    loginStatus = doDominoLoginSilent(username, pw);
+    console.log("Login Status: " + loginStatus); 
+
+if (loginStatus == true){
+  bookViewLoaded = getBVTemplates();
+  console.log('bookViewLoaded: '+ bookViewLoaded);
+  //alert(bookViewLoaded);
+}
+if (loginStatus == true){
+  HistoryLoaded = getHistoryTemplates();
+  console.log('HistoryLoaded: '+ HistoryLoaded);
+  //alert(bookViewLoaded);
+}
+
+
+
+// getSLTemplates(); 
+// getHistory();
+//  checkEmptyCustomer();
+
+}
 
 //Builds the iReport Database on the Device - it has 5 Tables
+
+
+
 
 function initWEBDB() {
 
 
     var version = '1.0';
     var displayName = 'eReportDB';
-//var db = openDatabase('mydb', '1.0', 'Test DB', 2 * 1024 * 1024);
     window.localDB = openDatabase(shortName, version, displayName, maxSize); // instantiate the Database
     
     window.reportDB = openDatabase("Reports", version, "Reports", maxSize); // instantiate the ReportDatabase
@@ -106,10 +134,10 @@ function getSLTemplates() {
 	   
 	   
 	  function SLSuccess(){
-	//	alert("SL Initialized");
+	       console.log("SL Initialized");
 	   }
 	  function SLFail(err){
-		alert(err);
+		console.log("SL Initialize Failure");
 	   }
 	   
 	   
@@ -132,27 +160,35 @@ function getBVTemplates() {
     techname = localStorage.getItem("tech");
     //alert("Getting Templates for " + techname); 
     //$('body').append('<div id="progress" onClick="$("#progress").remove();"><img align="middle" src="img/downloading.gif">&nbsp;&nbsp;&nbsp;&nbsp;Downloading Templates : <text id="tCount"></div>');
-    getCommandAsync(bvURL, "", "BVgotDocsJSON");
+   var getBVStatus = getCommandAsync(bvURL, "", "BVgotDocsJSON");
+    return(getBVStatus);
 }
 
+//History
 
+
+function getHistoryTemplates() {
+    historyDB.transaction(function(tx) {
+                tx.executeSql('DELETE FROM History where id > 0', [] );
+               
+            });
+    console.log('history table cleared');
+    //$('body').append('<div id="progress" onClick="$("#progress").remove();"><img align="middle" src="img/downloading.gif">&nbsp;&nbsp;&nbsp;&nbsp;Downloading History: <text id="hCount"></div>');
+   var getHistoryStatus =  getCommandAsync(histURL, "", "histDocsJSON");
+    return(getHistoryStatus);
+}
 
 
 
 function getTechnicianTemplates() {
     //alert("in getTechnicianTemplates");
     // $('body').append('<div id="progress" onClick="$("#progress").remove();"><img align="middle" src="img/downloading.gif">&nbsp;&nbsp;&nbsp;&nbsp;Downloading Technicians<text id="techCount"></div>');
-    getCommandAsync(tlURL, "", "TechiciansJSON");
+    var getTechStatus = getCommandAsync(tlURL, "", "TechiciansJSON");
+    return(getTechStatus);
 }
 
 
-//History
 
-
-function getHistory() {
-    //$('body').append('<div id="progress" onClick="$("#progress").remove();"><img align="middle" src="img/downloading.gif">&nbsp;&nbsp;&nbsp;&nbsp;Downloading History: <text id="hCount"></div>');
-    getCommandAsync(histURL, "", "histDocsJSON");
-}
 
 
 function getCommandAsync(sURL, sParms, sResponseHandler) {
@@ -179,6 +215,8 @@ function getCommandAsync(sURL, sParms, sResponseHandler) {
         objHTTP.setRequestHeader("Content-Type", "text/javascript");
         objHTTP.send(sParms);
     } catch (e) {}
+
+    return(true);
 }
 
 <!--End Get CommandAsync -->
@@ -290,32 +328,42 @@ function histDocsJSON(oObject) {
 						var sCol21 = returnJSONValue(entrydata[21]);
 						var sCol22 = returnJSONValue(entrydata[22]);
 						var sCol23 = returnJSONValue(entrydata[23]);
-						//alert("sCol22 "+ sCol22);
-
-						//var sCol20 = returnJSONValue(entrydata[20])[0];
+                       
+				
 						//write values to the Tables
-						addHistory(sCol0, sCol1, sCol2, sCol3, sCol4, sCol5, sCol6, sCol7, sCol8, sCol9, sCol10, sCol11, sCol12, sCol13, sCol14, sCol15, sCol16, sCol17, sCol18, sCol19, sCol20, sCol21, sCol22, sCol23);
-						//alert("History added");
+					HistoryStatus =	addHistory(sCol0, sCol1, sCol2, sCol3, sCol4, sCol5, sCol6, sCol7, sCol8, sCol9, sCol10, sCol11, sCol12, sCol13, sCol14, sCol15, sCol16, sCol17, sCol18, sCol19, sCol20, sCol21, sCol22, i);
+                  console.log("Inserted History Record: "+ HistoryStatus);
+          
+                        var tmpcustname = returnJSONValue(entrydata[1]);
+                        console.log("History Imported for: " + tmpcustname.toString()+' ' + i +' of ' + viewentries.length);
 
 
 
 
 
 					} //EndFor Loop
-				 alert('Downloaded: ' + i +' History Records');
+
+                    if (HistoryStatus <i-1){
+                       // alert('less' + i +' HistoryStatus '+ HistoryStatus );
+                       // getSLTemplates();
+                    } else{
+                        //alert('equal' + i);
+                        getSLTemplates();
+                    }
+
+
+				// alert('Downloaded: ' + i +' History Records');
 				   $('#progress').remove();
 				   $('body').append('<div id="progress">Initializing Database</div>');
 					var t = setTimeout(" $('#progress').remove();", 10000); //10 seconds
-					  $('body').append('<div id="progress">Please Restart iReport</div>');
-					var t = setTimeout(" $('#progress').remove();", 500); //.5 seconds
+					//  $('body').append('<div id="progress">Please Restart iReport</div>');
+					//var t = setTimeout(" $('#progress').remove();", 500); //.5 seconds
 					
-					//$('body').append('<div id="progress">Ready!</div>');
-					//var t = setTimeout(" $('#progress').remove();", 3000);
-					//alert('refresh dropdown after history loaded')
-					$('#customer_templates').selectmenu();
-					$('#customer_templates').selectmenu('refresh',true);
+				
+				//	$('#customer_templates').selectmenu();
+				//	$('#customer_templates').selectmenu('refresh',true);
 					
-					// obj is a valid variable, do something here.
+				
 	} // end if 
 	else {
 	var t = setTimeout(" $('#progress').remove();", 2000);
@@ -347,7 +395,7 @@ function TechiciansJSON(oObject) {
 
 
 function SLgotDocsJSON(oObject) {
-
+alert('SLgotDocsJSON');
     document.getElementById('customer_templates').innerHTML = "";
     localStorage.setItem("customer_templates_SL", "");
     var viewentries = oObject.viewentry;
@@ -363,12 +411,6 @@ function SLgotDocsJSON(oObject) {
 	var slcount = 0;
 	}
 	
-
-
-	
-
-
-
 
     document.getElementById('SLCnt').innerHTML = slcount;
     //document.getElementById('SLCnt').innerHTML = "</br>"+ n_viewentries+"<p>Shrink List";
@@ -511,6 +553,7 @@ function BVgotDocsJSON(oObject) {
 					var tmpcustname = returnJSONValue(entrydata[1]);
 					
 					tmpcustname2 = tmpcustname.toString();
+                    console.log('Added to BookView Table: ' + tmpcustname2);
 
 					document.getElementById('customer_templates').innerHTML += '<option value ="' + sCol0 + '">' + tmpcustname2.substring(0, 30) + '</option>';
 
@@ -526,16 +569,21 @@ function BVgotDocsJSON(oObject) {
 			//var t = setTimeout(" $('#progress').remove();", 3000);
 			//updateCounts();
 			var slcount = localStorage.getItem("slcount");
-
+            return(true);
    } //End if
 } //End BVgotDocsJSON  Function
 
 
 
-function addHistory(custid, BillName, BillADDR1, Notify, BillADDR2, BillCity, BillState, BillZip, CorporateName, ReportDate, MakeUp, parseEquipType, parseEquipname, parseEquipTestNames, parseRange, equipDataCollection, LastMonthEquipDataCollection, cyclesLow, cyclesHigh, accessGivenTo, tech, Status, ShipPhone) {
+function addHistory(custid, BillName, BillADDR1, Notify, BillADDR2, BillCity, BillState, BillZip, CorporateName, ReportDate, MakeUp, parseEquipType, parseEquipname, parseEquipTestNames, parseRange, equipDataCollection, LastMonthEquipDataCollection, cyclesLow, cyclesHigh, accessGivenTo, tech, Status, ShipPhone, counter) 
+{
+    
+
     historyDB.transaction(function(tx) {
-        tx.executeSql('INSERT INTO HISTORY (custid, BillName, BillADDR1, Notify, BillADDR2, BillCity, BillState, BillZip, CorporateName, ReportDate, MakeUp, parseEquipType, parseEquipname, parseEquipTestNames, parseRange, equipDataCollection, LastMonthEquipDataCollection, cyclesLow, cyclesHigh, accessGivenTo, tech, Status, ShipPhone) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)', [custid, BillName, BillADDR1, Notify, BillADDR2, BillCity, BillState, BillZip, CorporateName, ReportDate, MakeUp, parseEquipType, parseEquipname, parseEquipTestNames, parseRange, equipDataCollection, LastMonthEquipDataCollection, cyclesLow, cyclesHigh, accessGivenTo, tech, Status, ShipPhone], successCBHist, errorCB);
+        tx.executeSql('INSERT INTO HISTORY (custid, BillName, BillADDR1, Notify, BillADDR2, BillCity, BillState, BillZip, CorporateName, ReportDate, MakeUp, parseEquipType, parseEquipname, parseEquipTestNames, parseRange, equipDataCollection, LastMonthEquipDataCollection, cyclesLow, cyclesHigh, accessGivenTo, tech, Status, ShipPhone) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)', [custid, BillName, BillADDR1, Notify, BillADDR2, BillCity, BillState, BillZip, CorporateName, ReportDate, MakeUp, parseEquipType, parseEquipname, parseEquipTestNames, parseRange, equipDataCollection, LastMonthEquipDataCollection, cyclesLow, cyclesHigh, accessGivenTo, tech, Status, ShipPhone], successCBHist(counter), errorCB);
     });
+    
+    return(counter);
 }
 
     function errorCB(err) {
@@ -544,20 +592,22 @@ function addHistory(custid, BillName, BillADDR1, Notify, BillADDR2, BillCity, Bi
 
     // Transaction success callback
     //
-    function successCBHist() {
-       // console.log("History recored saved success!");
+    function successCBHist(counter) {
+
+       console.log("History recored inserted into Table successfully!" + counter );
+
     }
 
   function successCBBV() {
-        //console.log("BookView record inserted success!");
+        console.log("BookView record inserted into Table successfully!");
     }
 	
 	  function successCBSL() {
-        console.log("ShrinkList record inserted success!");
+        console.log("ShrinkList record inserted into Table Successfully!");
     }
 	
 	  function successCBTemplate() {
-        //console.log("Template Table record inserted success!");
+        console.log("Template Table record inserted success!");
     }
 	
 function addBookView(custid, BillName, BillADDR1, Notify, BillADDR2, BillCity, BillState, BillZip, CorporateName, parseEquipType, parseEquipname, parseEquipTestNames, parseRange, equipDataCollection, LastMonthEquipDataCollection, cyclesLow, cyclesHigh, accessGivenTo, tech, Status, LastMonthEquipDataCollection2, LastMonthEquipDataCollection3, ShipPhone, LastMonthEquipDataCollection4, LastMonthEquipDataCollection5, LastMonthEquipDataCollection6, LastMonthEquipDataCollection7, LastMonthEquipDataCollection8, LastMonthEquipDataCollection9) {
@@ -1901,8 +1951,9 @@ function doDominoLoginSilent(username, password) {
     logReq.open("POST", "https://www.chardonlabs.com/names.nsf?Login", false);
     logReq.send(poststring);
 
+ 
 
-    if (logReq.status == 200) {
+    if (logReq.readyState==4 && logReq.status == 200) {
 
         lastposition = logReq.responseText.lastIndexOf("###");
 
@@ -1924,7 +1975,7 @@ function doDominoLoginSilent(username, password) {
         username = logReq.responseText.substr(617, namelength - 29);
 
 
-        //alert("You are logged in as: "+ username);
+        console.log("You are logged in as: "+ username);
         //document.getElementById('TechName').innerHTML = username;
         return (true);
     }

@@ -2,7 +2,7 @@
 
 <html>
 <head>
-<meta name="viewport" content="content="user-scalable=no, width=device-width, height=device-height, initial-scale=1.0, maximum-scale=1.0" /> 
+<meta name="viewport" content="user-scalable=no, width=device-width, height=device-height, initial-scale=1.0, maximum-scale=1.0" /> 
 
 <meta http-equiv="Content-type" content="text/html; charset=utf-8">
 <title>iReport</title>
@@ -45,6 +45,7 @@
 
 //Fix Zooming 
   var metas = document.getElementsByTagName('meta');
+
   var i;
   if (navigator.userAgent.match(/iPhone/i)) {
     for (i=0; i<metas.length; i++) {
@@ -52,6 +53,7 @@
         metas[i].content = "width=device-width, minimum-scale=1.0, maximum-scale=1.0";
       }
     }
+    console.log(metas);
     document.addEventListener("gesturestart", gestureStart, false);
   }
   function gestureStart() {
@@ -420,7 +422,7 @@ function showImage()
 	<div data-role="footer" data-position="fixed" data-id="toolbar" data-fullscreen="true">  
     <div data-role="navbar">
       <ul>
-        <li><a href="#" data-icon="arrow-d" data-transition="fade" data-ajax="false" onclick="alert('Connecting to Server ....'); login(); getBVTemplates(); getSLTemplates(); getHistory(); checkEmptyCustomer();" >Get Templates</a></li>
+        <li><a href="#" data-icon="arrow-d" data-transition="fade" data-ajax="false" onclick="alert('Connecting to Server ....'); getTemplates();" >Get Templates</a></li>
         <li><a href="#" onclick="login(); syncData2();" data-icon="refresh" data-transition="fade">Sync</a></li>
 
 		     <li><a href="options.html" data-icon="gear" data-transition="fade">Setup</a></li>
