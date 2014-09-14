@@ -8,7 +8,7 @@
 #GetOD.ui-btn-active {
     background:#61B329 !important;
 }
-
+/*
 textarea {
      white-space: nowrap; 
     overflow:    scroll; 
@@ -16,7 +16,14 @@ textarea {
     overflow-x:  hidden;
 
    }
-
+*/
+textarea {
+    //white-space: nowrap;
+    overflow:    scroll; 
+    overflow-y:  hidden;
+    overflow-x:  hidden;
+  
+   }
   
 #sigDone {
 	font-family: Arial;

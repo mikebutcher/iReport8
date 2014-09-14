@@ -26,7 +26,7 @@ tlURL = "http://www.chardonlabs.com/CUSKEY.NSF/(json)?ReadViewEntries&count=500&
 
 
 //10-17-13  Change back to 100 -->200
-histURL = "http://www.chardonlabs.com/eReportv4.nsf/iPhoneHistory2?ReadViewEntries&count=5&RestrictToCategory=" + techname + "&outputformat=json";
+histURL = "http://www.chardonlabs.com/eReportv4.nsf/iPhoneHistory2?ReadViewEntries&count=200&RestrictToCategory=" + techname + "&outputformat=json";
 
 
 function getTemplates() {
