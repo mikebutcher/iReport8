@@ -230,6 +230,8 @@ text.daClient {
 }
 
 #preview {
+	padding-top: 5px;
+	border: 2px solid;
 	font-family: Arial;
 	-webkit-border-radius: 10px;
 	background-color: #C0C0C0;

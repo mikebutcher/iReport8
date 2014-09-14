@@ -465,7 +465,7 @@ function TechiciansJSON(oObject) {
 function SLgotDocsJSON(oObject) {
 
     document.getElementById('customer_templates').innerHTML = "";
-    alert('reseting Customer Templates DD - SL');
+   
     localStorage.setItem("customer_templates_SL", "");
     var viewentries = oObject.viewentry;
     try{    var n_viewentries = viewentries.length;}
@@ -555,7 +555,7 @@ var t = setTimeout(" $('#progress3').remove();", 3500);
 
 function BVgotDocsJSON(oObject) {
     document.getElementById('customer_templates').innerHTML = "";
-    alert('reseting Customer Templates DD - BV');
+ 
     localStorage.setItem("customer_templates_BV", "");
 
     var viewentries = oObject.viewentry;
@@ -1038,7 +1038,7 @@ function loadBV() {
     hide('preview');
     clearCustTemplates();
     document.getElementById('customer_templates').innerHTML = '<option value =""></option>';
-    alert('reseting Customer Templates DD - BV');
+    
 
     console.log("Loading BookView");
     //initWEBDB();
@@ -1061,12 +1061,10 @@ function loadBV() {
             var row = results.rows.item(i);
             sCol0 = row['custid'];
             sCol1 = row['BillName'];
-      //  alert(  '<option value ="'+sCol0 +'">'+ sCol1  +'</option>');
+ 
             document.getElementById('customer_templates').innerHTML += '<option value ="' + sCol0 + '">' + sCol1 + '</option>';
         }
-        //alert("BV List Loaded");
-       // $('#customer_templates').selectmenu();
-      //  $('#customer_templates').selectmenu('refresh',true);
+
     }
     
 }
@@ -1079,7 +1077,7 @@ function loadSL() {
     clearCustTemplates();
    
     document.getElementById('customer_templates').innerHTML = '<option value =""></option>';
-    alert('reseting Customer Templates DD - SL 2nd');
+   
     console.log("Loading Shrinking list");
    
     //initWEBDB();
@@ -1102,9 +1100,7 @@ function loadSL() {
           // alert(  '<option value ="'+sCol0 +'">'+ sCol1 +'</option>');
             document.getElementById('customer_templates').innerHTML += '<option value ="' + sCol0 + '">' + sCol1 + '</option>';
         }
-        //alert("SL Loaded successfully");
-        //$('#customer_templates').selectmenu();
-        //$('#customer_templates').selectmenu('refresh',true);
+    
     }
     
 
@@ -1115,14 +1111,7 @@ function loadOD() {
     //alert("load OD");
     clearCustTemplates();
     document.getElementById('customer_templates').innerHTML = '<option value =""></option>';
-    alert('reseting Customer Templates On Device');
-
-
-    //alert("Loading OnDevice");
-    //initWEBDB();
-    //alert("web db init");
-    //alert(localDB);
-    reportDB.transaction(
+     reportDB.transaction(
 
     function(transaction) {
         transaction.executeSql("SELECT * from Reports where status !='Archived'", [], dataHandlerOD, errorHandler);
@@ -1147,9 +1136,7 @@ function loadOD() {
             //alert(  '<option value ="'+sCol0 +'">'+ sCol1.substring(0,30)  +'</option>');
             document.getElementById('customer_templates').innerHTML += '<option value ="' + sCol0 + '">' + sCol1.substring(0, 430) + '</option>';
         }
-        //alert("Drafts - Loaded successfully");
-        //$('#customer_templates').selectmenu();
-        //$('#customer_templates').selectmenu('refresh',true);
+   
         
     }
     
@@ -1193,26 +1180,6 @@ function loadBU() {
     }
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 function go() {
     setTimeout("document.getElementById('daData').select();", 70);
@@ -1763,7 +1730,8 @@ function dataHandlerPreview(transaction, results) {
             //alert(mapURL);
             document.getElementById('map').innerHTML = mapURL;
 
-            show("preview");
+           //show("preview");
+            $( '#preview' ).toggle( 'slow', function() { });
         }
         catch (err) {
 

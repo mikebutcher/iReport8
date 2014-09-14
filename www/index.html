@@ -5,7 +5,6 @@
 <meta http-equiv="Content-type" content="text/html; charset=utf-8">
 <meta name="viewport" content="user-scalable=no, width=device-width, height=device-height, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0" /> 
 
-
 <title>iReport</title>
 
 <link rel="stylesheet" href="css/stylemaster.css" type="text/css" media="screen" title="no title" charset="utf-8">
@@ -118,159 +117,18 @@ console.error = console.debug = console.info =  console.log
 
 
 	
-//Load Templates based on listType
-	
-//alert("customer_templates " + customer_templates.value);
-	
-/*	
-  	if (listType =='shrinkingList'){
-  	//loadData('ShrinkingList');
-	loadSL(); //loadTemplates.js
-	$('#Client').val("Shrinking List");
-	
-  	//document.getElementById('Client').innerHTML = "Shrinking List";
-  	}
-  		if (listType =='bookView'){
-  	//	loadData('BookView');
-	loadBV(); //loadTemplates.js
-  		document.getElementById('Client').innerHTML = "Book View";
-  	}
-  		if (listType =='onDevice'){
-  	//	loadData('Reports');
-	loadOD(); //loadTemplates.js
-  		document.getElementById('Client').innerHTML = "On Device";
-  	}
-  	
-	checkEmptyCustomer(); //Preload customer templates field with choices
-	
- */
   	
   
 
     }
 
-
-	
-    function onDeviceReadyOLD12345667() {
-	
-	try{
-      	pictureSource=navigator.camera.PictureSourceType;
-	    destinationType=navigator.camera.DestinationType;
-		//iosios 7 change height
-		
-        document.body.style.marginTop = "20px";
-		
-		
-		
-    }  
-     catch(err) {
-	 //alert("chrome");
-	 }
-	 
-        //Globals
-		
-	var backupURL
-		
-	//var backupURL = "http://www.chardonlabs.com/R2D2.nsf/prereport?createdocument";
-	
-	//var backupURL = "http://www.chardonlabs.com/eReportv4.nsf/iPhone?createdocument";
-		
-		localStorage.setItem('backupURL', 'http://www.chardonlabs.com/R2D2.nsf/prereport?createdocument' );
-		localStorage.setItem('backupURL', 'http://www.chardonlabs.com/eReportv4.nsf/iPhone?createdocument' );
-			
-			
-			var daIndex = 0;
-		 	 initWEBDB(); //iReport.js
-		 	 hide("daJCPText");
-			//Check for blank Tech, if so then go to setup.html
-			setupUser();	//initDB.js	
-		
-		
-		//populate the Shrinking List
-		//loadSL();  //iReport.js
-		
-		 	 
-
-  
-	
-	
-	// Add this behavior to all text fields
-   
-	
-    	 
-	 //Get the Tech name from LocalStorage
-   	 document.getElementById('TechName').innerHTML = localStorage.getItem("tech");
-	 document.getElementById('TechName2').innerHTML = localStorage.getItem("tech");
-     //document.getElementById('TechName3').innerHTML = localStorage.getItem("tech");
-	 document.getElementById('TechName4').innerHTML = localStorage.getItem("tech");
-	
-	//Get the Template List Type from localStorage
-
-	localStorage.setItem('listType', 'shrinkingList' ); // init the List Type
-	var listType = localStorage.getItem('listType');
-
-
-	
-//Load Templates based on listType
-	
-//alert("customer_templates " + customer_templates.value);
-	
-  	if (listType =='shrinkingList'){
-  	//loadData('ShrinkingList');
-	loadSL(); //loadTemplates.js
-	$('#Client').val("Shrinking List");
-	
-  	//document.getElementById('Client').innerHTML = "Shrinking List";
-  	}
-  		if (listType =='bookView'){
-  	//	loadData('BookView');
-	loadBV(); //loadTemplates.js
-  		document.getElementById('Client').innerHTML = "Book View";
-  	}
-  		if (listType =='onDevice'){
-  	//	loadData('Reports');
-	loadOD(); //loadTemplates.js
-  		document.getElementById('Client').innerHTML = "On Device";
-  	}
-  	
-	checkEmptyCustomer(); //Preload customer templates field with choices
-	
- 
-  	
-  
-     	 
-    }
-    
-
-    
-    
-	
-	
 	 function checkEmptyCustomer() {
 	 	 
 		 	$('#customer_templates').selectmenu();
 			$('#customer_templates').selectmenu('refresh',true);
 		 
 	 return;
-	 //Took This out ..causing incorrect listTypes  to sent back
-	//checks the customer template dropdown - if its empty try the BookView
-			var zz = document.getElementById('customer_templates').innerHTML;
-			var xx = '<option value =""></option>';
-			
-			alert(localStorage.getItem('listType'));
-			
-			alert("zz"+zz);
-			alert("xx"+xx);
-			
-			if (zz=xx){
-			//alert("customers are blank");
-			
-			document.getElementById('customer_templates').innerHTML = '<option value =""></option>';
-			
-			localStorage.setItem('listType', 'bookView' ); // init the List Type
-			
-			loadBV(); //loadTemplates.js
-	      }
+	
 	}
 	
 	
@@ -338,14 +196,7 @@ console.error = console.debug = console.info =  console.log
 	
 		hide("simple");
         }
-	//Step 2 - Get the Makeup Values
 
-	
-	//Step 3 - Load the Equipment Arrays
-
-	
-	
-    
     var mapURL = null;
    
    
@@ -470,7 +321,9 @@ function showImage()
  <img src="img/graph.jpg"  alt="Graph" height="30px" width="30px" onclick="hide('preview'); hide('ChooseCustomer'); show('Graph');begin();"> 
 </span>
 
-<div id="preview" style="display: none"><text id='dspCust'></text><br>
+<div id="preview" onclick="$( '#preview' ).toggle( 'slow', function() { });" style="display: none">
+</p>
+<text id='dspCust'></text><br>
 </p>
 <text id='BillAddress'></text><br>
 <text id='emailNotify'></text><br>
@@ -483,7 +336,19 @@ function showImage()
 
 		
 
-
+	<div>&nbsp</div>
+		<div>&nbsp</div>
+			<div>&nbsp</div>
+				<div>&nbsp</div>
+					<div>&nbsp</div>
+					<div>&nbsp</div>
+		<div>&nbsp</div>
+			<div>&nbsp</div>
+				<div>&nbsp</div>
+					<div>&nbsp</div>
+					<div>&nbsp</div>
+				<div>&nbsp</div>
+					<div>&nbsp</div>
 
 	<div data-role="footer" data-position="fixed" data-id="toolbar" data-fullscreen="true">  
     <div data-role="navbar">
