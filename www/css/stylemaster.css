@@ -1,3 +1,6 @@
+
+
+
 #debugDiv {
 	display:none;
 	height: 150px; 
@@ -85,8 +88,8 @@ footer {
 */
 body {
 
-	background: #FFFFFF none repeat scroll 0 0;
-	color: #000000;
+	
+	color: #000;
 	font-family: Helvetica;
 	font-size: 72%;
 	line-height: 1.5em;
@@ -96,6 +99,11 @@ body {
 	vertical-align: middle;
 
 }
+
+
+
+
+
 
 text.daClient {
 	color: black;

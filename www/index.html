@@ -261,12 +261,12 @@ function showImage()
 
 
 </head>
-<body onload="onLoad();"  id="stage" class="theme">
+<body onload="onLoad();"   id="stage" class="theme">
 
 <form>
 
 
-<div data-role="page" id="ChooseCustomer">
+<div data-role="page"  id="ChooseCustomer">
 
 
   <div>&nbsp;</div>
@@ -274,9 +274,9 @@ function showImage()
    
 	 <div data-role="navbar" class="ui-state-persist">
       <ul>
-        <li><a class="ui-btn-active"  href="#" data-icon="grid" onClick="localStorage.setItem('listType', 'shrinkingList' );loadSL();"  id="daSLCnt" data-theme="b" >Shrink List <text id="SLCnt"></text></a></li>
-	    <li><a href="#" data-icon="grid" onClick="localStorage.setItem('listType', 'bookView' );loadBV(); " id="daBVCnt" data-theme="b"  >Book View <text id="BVCnt"></text></a></li>
-		<li><a href="#" data-icon="grid" onClick="localStorage.setItem('listType', 'onDevice' );loadOD(); "  id="GetOD" data-theme="b"  >On Device <text id="CompCnt"></text></a></li>
+        <li><a class="ui-btn-active"  href="#" data-icon="grid" onClick="localStorage.setItem('listType', 'shrinkingList' );loadSL();"  id="daSLCnt" data-theme="a" >Shrink List <text id="SLCnt"></text></a></li>
+	    <li><a href="#" data-icon="grid" onClick="localStorage.setItem('listType', 'bookView' );loadBV(); " id="daBVCnt" data-theme="a"  >Book View <text id="BVCnt"></text></a></li>
+		<li><a href="#" data-icon="grid" onClick="localStorage.setItem('listType', 'onDevice' );loadOD(); "  id="GetOD" data-theme="a"  >On Device <text id="CompCnt"></text></a></li>
 	    </ul>
     </div>
   </div>
@@ -287,7 +287,7 @@ function showImage()
 	
   <center><h1><a style="text-decoration:none; color:black" href="#" onclick="$( '#debugDiv' ).toggle( 'slow', function() { });console.log('List type is: '+ localStorage.getItem('listType')+'\n');">Chardon Labs</a></h1></center>
   
-  <a href="#" data-role="button" data-iconpos="top" data-theme="c" onclick="hide('preview'); startReport(); "><center><img src="img/logo.png" alt="Chardon Logo" height="35px" width="30px" ></center><h1>Start iReport</h1></br></a>
+  <a href="#" data-role="button" data-iconpos="top" data-theme="a" onclick="hide('preview'); startReport(); "><center><img src="img/logo.png" alt="Chardon Logo" height="35px" width="30px" ></center><h1>Start iReport</h1></br></a>
   
 
 
