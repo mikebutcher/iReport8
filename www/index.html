@@ -414,7 +414,8 @@ function showImage()
 
 <!--////////////////////////////////////////MAKEUP///////////////////////////////// -->
 <div id="Makeup" style="display: none;">
-
+<div>&nbsp</div>
+<div>&nbsp</div>
 <table class="MUTop" border="0" cellspacing="0" cellpadding="0"
 	width="100%">
 	<tr>
@@ -556,7 +557,8 @@ saveReport (custid, this.id, this.value);"
 <!--////////////////////////////////////////Equipment///////////////////////////////// -->
 
 <div id="equip" style="display: none">
-
+<div>&nbsp</div>
+<div>&nbsp</div>
 <table border="0" cellspacing="0" cellpadding="0" width="100%" >
 	<tr>
 		<td colspan="1" align="left"><img src="img/Larrow.png"
@@ -686,6 +688,8 @@ saveReport (custid, this.id, this.value);"
  
 				
 <div id="comments" style="display: none">
+<div>&nbsp</div>
+<div>&nbsp</div>
 <table border="0" cellspacing="0" cellpadding="0" width="100%">
 	<tr>
 		<td colspan="1" align="left"><img src="img/Larrow.png"
@@ -761,6 +765,8 @@ saveReport (custid, this.id, this.value);"
 </div>
 
 <div id = "CameraSection" style ="display:none">
+<div>&nbsp</div>
+<div>&nbsp</div>
 <table border="0" cellspacing="0" cellpadding="0" width="100%">
 	<tr>
 		<td colspan="1" align="left"><img src="img/Larrow.png"
@@ -806,6 +812,8 @@ saveReport (custid, this.id, this.value);"
 
 
 <div id="actions" style="display: none; vertical-align:middle;">
+<div>&nbsp</div>
+<div>&nbsp</div>
 <table border="0" cellspacing="0" cellpadding="0" width="100%">
 	<tr>
 		<td colspan="1" align="left"><img src="img/Larrow.png"
@@ -1381,6 +1389,8 @@ value="I added treatment to the closed loop (see comments)"
 
 <div id="SaveIT" style="display: none">
 
+<div>&nbsp</div>
+<div>&nbsp</div>
 
 <table border="0" cellspacing="0" cellpadding="0" width="100%">
 	<tr>
@@ -1388,20 +1398,20 @@ value="I added treatment to the closed loop (see comments)"
 			onClick="hide('SaveIT'); show('comments');" ></td>
 		<td>
 		<center>
-		<h3>Complete iReport</h3>
+		
 		</center>
 		</td>
-		<td colspan="1" align="right"><img src="img/Rarrow.png"
-			onClick="alert('Save Draft or Send it');"
-			style="display:none"></td>
+		<td>&nbsp;</td>
 	</tr>
 </table>
-
+<center>
+<h3>Complete iReport</h3>
+<img id="logo" src="img/logo.png" />
+</center>
 <table border="0" cellspacing="0" cellpadding="0" width="100%">
 	<tr valign="top">
-		<td colspan="3"><img
-			style="width: 25px; height: 30px; float: left; padding-top: .1cm; padding-right: .5cm; padding-left: .5cm;"
-			id="logo" src="img/logo.png" onClick="updateCounts();" />
+		<td colspan="3">
+
 		
 		</td>
 	<tr>
@@ -1409,13 +1419,13 @@ value="I added treatment to the closed loop (see comments)"
 		<font size="2" face="Verdana">
 		<td>&nbsp&nbsp;<text id='onlineStatus'></td>
 		<td>&nbsp;&nbsp&nbsp;&nbsp&nbsp;&nbsp&nbsp;&nbsp&nbsp;&nbsp</td>
-		<td alight='right'>Tech: <text id='TechName4'></text>&nbsp;&nbsp
+		<td alight='right'><text id='TechName4'></text>&nbsp;&nbsp
 		</font>
 		</td>
 	</tr>
 </table>
 
-<a href="#" onclick="alert(document.getElementById('DaUnid').value); var unid = document.getElementById('DaUnid').value;  completeReport(unid, 'Status', 'Completed');" > Complete </a>
+
 
 <hr>
 <center><a id="SaveSendID" href="#"
