@@ -35,15 +35,7 @@
 
 <script type="text/javascript" charset="utf-8">
   
-  //Console Log
-  /*
-  if (typeof console  != "undefined") 
-  if (typeof console.log != 'undefined')
-    console.olog = console.log;
-else
-  console.olog = function() {};
- */
-
+ 
 console.log = function(message) {
   //console.olog(message);
   $('#debugDiv').append('</br>' + message +'</br>' );
@@ -53,31 +45,7 @@ console.error = console.debug = console.info =  console.log
 
 //End console Log
 
-//Fix Zooming 
-/*
-  var metas = document.getElementsByTagName('meta');
 
-  var i;
-  if (navigator.userAgent.match(/iPhone/i)) {
-    for (i=0; i<metas.length; i++) {
-      if (metas[i].name == "viewport") {
-        metas[i].content = "width=device-width, minimum-scale=1.0, maximum-scale=1.0";
-      }
-    }
-    console.log(metas);
-    document.addEventListener("gesturestart", gestureStart, false);
-  }
-  function gestureStart() {
-  alert('zoom a zoom zoom');
-    for (i=0; i<metas.length; i++) {
-      if (metas[i].name == "viewport") {
-        metas[i].content = "width=device-width, minimum-scale=1.0, maximum-scale=1.0";
-      }
-    }
-  }
-
-*/
-	     
 		
    //Global Vars
      var daIndex = 0;
@@ -106,8 +74,7 @@ console.error = console.debug = console.info =  console.log
 
 		 console.log("in OnDeviceReady \n");
 
-		//Add the 20 px Top Margin for ios7 and up
-		document.body.style.marginTop = "20px";
+		
     		     
 
         var backupURL;
@@ -115,7 +82,7 @@ console.error = console.debug = console.info =  console.log
 		
 		localStorage.setItem('backupURL', 'http://www.chardonlabs.com/R2D2.nsf/prereport?createdocument' );
 		localStorage.setItem('backupURL', 'http://www.chardonlabs.com/eReportv4.nsf/iPhone?createdocument' );
-			alert('pre setupuser');
+			
 			 setupUser();	//initDB.js	
 			console.log('Setup User Ran');
 
@@ -451,7 +418,7 @@ function showImage()
 <div data-role="page" id="ChooseCustomer">
 
 
-  <div>.</div>
+  <div>&nbsp;</div>
    <div data-role="header" data-position="fixed" data-id="toolbar1" data-fullscreen="true">
    
 	 <div data-role="navbar" class="ui-state-persist">

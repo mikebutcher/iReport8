@@ -1,17 +1,78 @@
+var localDB;
+var reportDB;
+var historyDB;
+
+function initWEBDB() {
+
 var shortName = 'iReportDB'; // Global Variable for the name of the Database
 var maxSize = 15 * 1024 * 1024; //Global Variable for the db size 15 MB
-var localDB = null; // Global Variable for the WebSQLDB
-var reportDB = null;
-var historyDB = null;
+//var localDB = null; // Global Variable for the WebSQLDB
+//var reportDB = null;
+//var historyDB = null;
+var version = '1.0';
+var displayName = 'eReportDB';
+localDB = window.openDatabase(shortName, version, displayName, maxSize); // instantiate the Database
 
-var techname = localStorage.getItem("tech");
+reportDB = window.openDatabase("Reports", version, "Reports", maxSize); // instantiate the ReportDatabase
+ 
+historyDB = window.openDatabase("History", version, "History", maxSize); 
+
+
 
 localStorage.setItem('photocount', 1);
 
 
+    console.log('Starting initWebDB \n');
+ 
+
+
+    reportDB.transaction(function(tx) {
+        tx.executeSql('CREATE TABLE  IF NOT EXISTS Reports' + '(id INTEGER PRIMARY KEY autoincrement, custid TEXT, name TEXT, Status TEXT, timestamp TEXT, tech TEXT, ReportDate TEXT, Contact TEXT, notify TEXT, BillAddr2 TEXT, BillCity TEXT, BILLState TEXT, BillZip TEXT, Conductivity TEXT, calciumHardness TEXT,  alkalinity TEXT, chlorides TEXT,  EquipType TEXT, EquipName TEXT, EquipTest TEXT, EquipRange TEXT, EquipDataCollection TEXT, ActionsList TEXT, ActionNum TEXT, container BLOB, AccessGivenTo TEXT, Comments TEXT, mileage TEXT, Photo1 BLOB, Photo2 BLOB, Photo3 BLOB, Photo4 BLOB, Photo5 BLOB, Photo6 BLOB, Latitude Text, Longitude Text, StartTime Text, EndTime Text, ListType Text, exception Text  )', []);
+    });
+
+
+
+    historyDB.transaction(function(tx) {
+        tx.executeSql('create table if not exists History' + '(id integer primary key autoincrement, custid TEXT, BillName TEXT, BillADDR1 TEXT, Notify TEXT, BillADDR2 TEXT, BillCity TEXT, BillState TEXT, BillZip TEXT, CorporateName TEXT, ReportDate TEXT, MakeUp TEXT, parseEquipType TEXT, parseEquipname TEXT, parseEquipTestNames TEXT, parseRange TEXT, equipDataCollection TEXT, LastMonthEquipDataCollection TEXT, cyclesLow TEXT, cyclesHigh TEXT, accessGivenTo TEXT, tech TEXT, Status TEXT,  ShipPhone TEXT)', []);
+    });
+
+    localDB.transaction(function(tx) {
+
+        tx.executeSql('create table if not exists BookView' + '(id integer primary key autoincrement, custid TEXT, BillName TEXT, BillADDR1 TEXT, Notify TEXT, BillADDR2 TEXT, BillCity TEXT, BillState TEXT, BillZip TEXT, CorporateName TEXT, parseEquipType TEXT, parseEquipname TEXT, parseEquipTestNames TEXT, parseRange TEXT, equipDataCollection TEXT, cyclesLow TEXT, cyclesHigh TEXT, accessGivenTo TEXT, tech TEXT, Status TEXT, ShipPhone TEXT  )', []);
+
+        tx.executeSql('create table if not exists Templates' + '(id integer primary key autoincrement, custid TEXT, BillName TEXT, BillADDR1 TEXT, Notify TEXT, BillADDR2 TEXT, BillCity TEXT, BillState TEXT, BillZip TEXT, CorporateName TEXT, parseEquipType TEXT, parseEquipname TEXT, parseEquipTestNames TEXT, parseRange TEXT, equipDataCollection TEXT, cyclesLow TEXT, cyclesHigh TEXT, accessGivenTo TEXT, tech TEXT, Status TEXT, ShipPhone TEXT  )', []);
+
+        tx.executeSql('CREATE TABLE  IF NOT EXISTS Technicians' + '(id INTEGER PRIMARY KEY autoincrement, name TEXT)', []);
+
+        tx.executeSql('CREATE TABLE  IF NOT EXISTS ShrinkingList' + '(id INTEGER PRIMARY KEY autoincrement, custid TEXT, name TEXT)', []);
+
+
+    });
+    
+    
+    console.log("initWebDB success" +"\n");
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 ///Production Templates
 //BookView Pulled from Customer 2 Database
-
+var techname = localStorage.getItem("tech");
 slURL = "http://www.chardonlabs.com/eReportv4.nsf/JSONTemplatesCATsingle2?ReadViewEntries&count=500&RestrictToCategory=" + techname + "&outputformat=json";
 bvURL = "http://www.chardonlabs.com/Customer2.nsf/JSONBookView2?ReadViewEntries&count=500&RestrictToCategory=" + techname + "&outputformat=json";
 
@@ -65,13 +126,14 @@ if (loginStatus == true){
 
 
 
-function initWEBDB() {
+//Broken
+function initWEBDBold() {
 
     console.log('Starting initWebDB \n');
     var version = '1.0';
     var displayName = 'eReportDB';
     window.localDB = openDatabase(shortName, version, displayName, maxSize); // instantiate the Database
-    
+    // var db = window.openDatabase("Database", "1.0", "Cordova Demo", 200000);
     window.reportDB = openDatabase("Reports", version, "Reports", maxSize); // instantiate the ReportDatabase
     //alert("reportDB ok");
     window.historyDB = openDatabase("History", version, "History", maxSize); // instantiate the ReportDatabase
@@ -342,10 +404,10 @@ function histDocsJSON(oObject) {
                 
                         //write values to the Tables
                     HistoryStatus = addHistory(sCol0, sCol1, sCol2, sCol3, sCol4, sCol5, sCol6, sCol7, sCol8, sCol9, sCol10, sCol11, sCol12, sCol13, sCol14, sCol15, sCol16, sCol17, sCol18, sCol19, sCol20, sCol21, sCol22, i);
-                  console.log("Inserted History Record: "+ HistoryStatus+"\n");
+                  //console.log("Inserted History Record: "+ HistoryStatus+"\n");
           
                         var tmpcustname = returnJSONValue(entrydata[1]);
-                        console.log("History Imported for: " + tmpcustname.toString()+' ' + i +' of ' + viewentries.length +"\n");
+                   //     console.log("History Imported for: " + tmpcustname.toString()+' ' + i +' of ' + viewentries.length +"\n");
 
 
 
@@ -403,6 +465,7 @@ function TechiciansJSON(oObject) {
 function SLgotDocsJSON(oObject) {
 
     document.getElementById('customer_templates').innerHTML = "";
+    alert('reseting Customer Templates DD - SL');
     localStorage.setItem("customer_templates_SL", "");
     var viewentries = oObject.viewentry;
     try{    var n_viewentries = viewentries.length;}
@@ -477,8 +540,8 @@ function SLgotDocsJSON(oObject) {
 
 
     } //EndFor Loop
-        $('#customer_templates').selectmenu();
-    $('#customer_templates').selectmenu('refresh',true);
+    //    $('#customer_templates').selectmenu();
+    //    $('#customer_templates').selectmenu('refresh',true);
  $('body').append('<div id="progress3">Saved SL Templates: '+i+' </div>');
 var t = setTimeout(" $('#progress3').remove();", 3500);
    // var t = setTimeout(" $('#progress').remove();", 1000);
@@ -492,6 +555,7 @@ var t = setTimeout(" $('#progress3').remove();", 3500);
 
 function BVgotDocsJSON(oObject) {
     document.getElementById('customer_templates').innerHTML = "";
+    alert('reseting Customer Templates DD - BV');
     localStorage.setItem("customer_templates_BV", "");
 
     var viewentries = oObject.viewentry;
@@ -570,8 +634,8 @@ function BVgotDocsJSON(oObject) {
                 } //EndFor Loop
             //$('body').append('<div id="progress">Saved: BV: '+n_viewentries +' SL:'+slcount+'</div>');
             
-            $('#customer_templates').selectmenu();
-            $('#customer_templates').selectmenu('refresh',true);
+            //$('#customer_templates').selectmenu();
+           // $('#customer_templates').selectmenu('refresh',true);
             $('body').append('<div id="progress4">Saved: BookView Templates: '+i+' </div>');
             var t = setTimeout(" $('#progress4').remove();", 4500);
             //var t = setTimeout(" $('#progress').remove();", 3000);
@@ -974,7 +1038,7 @@ function loadBV() {
     hide('preview');
     clearCustTemplates();
     document.getElementById('customer_templates').innerHTML = '<option value =""></option>';
-
+    alert('reseting Customer Templates DD - BV');
 
     console.log("Loading BookView");
     //initWEBDB();
@@ -1001,8 +1065,8 @@ function loadBV() {
             document.getElementById('customer_templates').innerHTML += '<option value ="' + sCol0 + '">' + sCol1 + '</option>';
         }
         //alert("BV List Loaded");
-        $('#customer_templates').selectmenu();
-        $('#customer_templates').selectmenu('refresh',true);
+       // $('#customer_templates').selectmenu();
+      //  $('#customer_templates').selectmenu('refresh',true);
     }
     
 }
@@ -1013,9 +1077,9 @@ function loadSL() {
     hide('preview');
     
     clearCustTemplates();
-    
+   
     document.getElementById('customer_templates').innerHTML = '<option value =""></option>';
-    
+    alert('reseting Customer Templates DD - SL 2nd');
     console.log("Loading Shrinking list");
    
     //initWEBDB();
@@ -1051,6 +1115,7 @@ function loadOD() {
     //alert("load OD");
     clearCustTemplates();
     document.getElementById('customer_templates').innerHTML = '<option value =""></option>';
+    alert('reseting Customer Templates On Device');
 
 
     //alert("Loading OnDevice");
@@ -1100,7 +1165,7 @@ function loadBU() {
 
 
     document.getElementById('customer_templatesBU').innerHTML = '<option value =""></option>';
-
+    alert('reseting Customer Templates DD - BU');
     console.log("Loading Archived Reports ");
     //initWEBDB();
     historyDB.transaction(
