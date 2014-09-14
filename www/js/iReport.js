@@ -39,16 +39,16 @@ var t = setTimeout(" $('#progress1').remove();", 2800); //10 seconds
      var username = localStorage.getItem("username");
      var pw = localStorage.getItem("password");
     loginStatus = doDominoLoginSilent(username, pw);
-    console.log("Login Status: " + loginStatus); 
+    console.log("Login Status: " + loginStatus +"\n"); 
 
 if (loginStatus == true){
   bookViewLoaded = getBVTemplates();
-  console.log('bookViewLoaded: '+ bookViewLoaded);
+  console.log('bookViewLoaded: '+ bookViewLoaded +"\n");
   //alert(bookViewLoaded);
 }
 if (loginStatus == true){
   HistoryLoaded = getHistoryTemplates();
-  console.log('HistoryLoaded: '+ HistoryLoaded);
+  console.log('HistoryLoaded: '+ HistoryLoaded +"\n");
   //alert(bookViewLoaded);
 }
 
@@ -67,7 +67,7 @@ if (loginStatus == true){
 
 function initWEBDB() {
 
-
+    console.log('Starting initWebDB \n');
     var version = '1.0';
     var displayName = 'eReportDB';
     window.localDB = openDatabase(shortName, version, displayName, maxSize); // instantiate the Database
@@ -109,7 +109,7 @@ function initWEBDB() {
     });
     
     
-    console.log("initWebDB success");
+    console.log("initWebDB success" +"\n");
 }
 
 
@@ -140,10 +140,10 @@ function getSLTemplates() {
        
        
       function SLSuccess(){
-           console.log("SL Initialized");
+           console.log("SL Initialized" +"\n");
        }
       function SLFail(err){
-        console.log("SL Initialize Failure");
+        console.log("SL Initialize Failure"+"\n");
        }
        
        
@@ -178,7 +178,7 @@ function getHistoryTemplates() {
                 tx.executeSql('DELETE FROM History where id > 0', [] );
                
             });
-    console.log('history table cleared');
+    console.log('history table cleared \n');
     //$('body').append('<div id="progress" onClick="$("#progress").remove();"><img align="middle" src="img/downloading.gif">&nbsp;&nbsp;&nbsp;&nbsp;Downloading History: <text id="hCount"></div>');
    var getHistoryStatus =  getCommandAsync(histURL, "", "histDocsJSON");
     return(getHistoryStatus);
@@ -338,10 +338,10 @@ function histDocsJSON(oObject) {
                 
                         //write values to the Tables
                     HistoryStatus = addHistory(sCol0, sCol1, sCol2, sCol3, sCol4, sCol5, sCol6, sCol7, sCol8, sCol9, sCol10, sCol11, sCol12, sCol13, sCol14, sCol15, sCol16, sCol17, sCol18, sCol19, sCol20, sCol21, sCol22, i);
-                  console.log("Inserted History Record: "+ HistoryStatus);
+                  console.log("Inserted History Record: "+ HistoryStatus+"\n");
           
                         var tmpcustname = returnJSONValue(entrydata[1]);
-                        console.log("History Imported for: " + tmpcustname.toString()+' ' + i +' of ' + viewentries.length);
+                        console.log("History Imported for: " + tmpcustname.toString()+' ' + i +' of ' + viewentries.length +"\n");
 
 
 
@@ -562,7 +562,7 @@ function BVgotDocsJSON(oObject) {
                     var tmpcustname = returnJSONValue(entrydata[1]);
                     
                     tmpcustname2 = tmpcustname.toString();
-                    console.log('Added to BookView Table: ' + tmpcustname2);
+                    console.log('Added to BookView Table: ' + tmpcustname2 +"\n");
 
                     document.getElementById('customer_templates').innerHTML += '<option value ="' + sCol0 + '">' + tmpcustname2.substring(0, 30) + '</option>';
 
@@ -604,20 +604,20 @@ function addHistory(custid, BillName, BillADDR1, Notify, BillADDR2, BillCity, Bi
     //
     function successCBHist(counter) {
 
-       console.log("History recored inserted into Table successfully!" + counter );
+       console.log("History recorded inserted into Table successfully!" + counter +"\n" );
 
     }
 
   function successCBBV() {
-        console.log("BookView record inserted into Table successfully!");
+        console.log("BookView record inserted into Table successfully!" +"\n" );
     }
     
       function successCBSL() {
-        console.log("ShrinkList record inserted into Table Successfully!");
+        console.log("ShrinkList record inserted into Table Successfully!"+"\n");
     }
     
       function successCBTemplate() {
-        console.log("Template Table record inserted success!");
+        console.log("Template Table record inserted success!" +"\n");
     }
     
 function addBookView(custid, BillName, BillADDR1, Notify, BillADDR2, BillCity, BillState, BillZip, CorporateName, parseEquipType, parseEquipname, parseEquipTestNames, parseRange, equipDataCollection, LastMonthEquipDataCollection, cyclesLow, cyclesHigh, accessGivenTo, tech, Status, LastMonthEquipDataCollection2, LastMonthEquipDataCollection3, ShipPhone, LastMonthEquipDataCollection4, LastMonthEquipDataCollection5, LastMonthEquipDataCollection6, LastMonthEquipDataCollection7, LastMonthEquipDataCollection8, LastMonthEquipDataCollection9) {
@@ -931,7 +931,7 @@ function clearCustTemplates() {
         document.getElementById('histList').innerHTML = '<option value =""></option>';
     }
     catch (e) {
-        console.log("tried to clear the history dropdown")
+        console.log("tried to clear the history dropdown" +"\n")
     }
     //document.getElementById('histList').innerHTML == null;
     //alert("clear Hist Options");
@@ -1761,11 +1761,11 @@ function toggleException(){
 //Initial User Setup Logic
 
 function setupUser() {
-    updateCounts(); //count stuff
-    console.log("Updated counts - iReport.js");
+   
+ console.log('In Setup User \n');
 
     var TheTech = localStorage.getItem("tech");
-    //alert("Welcome: "+ TheTech);
+    console.log("Welcome: "+ TheTech);
     //document.getElementById('TechName').innerHTML =localStorage.getItem("tech");
     //var TheTech = localStorage.getItem("username");
     if (TheTech == null || TheTech == '') {
@@ -1777,48 +1777,13 @@ function setupUser() {
 
 
 
-    function initial_setup() {
-        var name = prompt("eReport Setup -  Please enter your Username", "");
-        var pw = prompt("eReport Setup -  Please enter your Domino Password", "");
-
-
-        if (name != null && name != "" && pw != "") {
-
-
-
-            daLogin = doDominoLogin(name, pw); // ajaxLogin.js
-            if (daLogin) {
-                //alert("daLogin succeeded");
-                //Set the tech name based on who is logged in
-                localStorage.setItem("username", name);
-                localStorage.setItem("password", pw);
-
-
-
-                //var TheTech = localStorage.getItem("tech");
-                //var TheTech = localStorage.getItem("username");
-                document.getElementById('TechName').innerHTML = localStorage.getItem("Tech");
-
-
-
-                //alert("hello " + TheTech);
-                show('initSetup');
-            }
-
-
-        }
-    }
+  
  
 
 }
 
 
 
-
-
-
-
-<!--End Initial Setup Function -->
 
 function setTech(daTech) {
     localStorage.setItem("tech", daTech);

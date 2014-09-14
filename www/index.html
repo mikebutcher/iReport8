@@ -2,9 +2,10 @@
 
 <html>
 <head>
-<meta name="viewport" content="user-scalable=no, width=device-width, height=device-height, initial-scale=1.0, maximum-scale=1.0" /> 
-
 <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+<meta name="viewport" content="user-scalable=no, width=device-width, height=device-height, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0" /> 
+
+
 <title>iReport</title>
 
 <link rel="stylesheet" href="css/stylemaster.css" type="text/css" media="screen" title="no title" charset="utf-8">
@@ -22,28 +23,36 @@
 <script src="jq/jquery.js"></script>
 <script src="jq/jquery.mobile-1.3.js"></script>
 
-
-
-
 <!--  HighCharts Includes  -->
 <script src="js/highcharts/js/highcharts.js"></script>
-
+<!--Graphing Functions  -->
+<script src="js/myGraphCallback.js"></script>
 
 <!-- Signature Capture files -->
 <script type="text/javascript" src="js/mousecanvas.js"></script>
 <script type="text/javascript" src="js/touchcanvas.js"></script>
 
 
-
-
-<!--Graphing Functions  -->
-<script src="js/myGraphCallback.js"></script>
-
-
 <script type="text/javascript" charset="utf-8">
   
+  //Console Log
+  if (typeof console  != "undefined") 
+  if (typeof console.log != 'undefined')
+    console.olog = console.log;
+else
+  console.olog = function() {};
+ 
+console.log = function(message) {
+  console.olog(message);
+  $('#debugDiv').append('</br>' + message +'</br>' );
+  //$('#debugDiv').append('<p>' + message + '</p>');
+};
+console.error = console.debug = console.info =  console.log
+
+//End console Log
 
 //Fix Zooming 
+/*
   var metas = document.getElementsByTagName('meta');
 
   var i;
@@ -65,7 +74,7 @@
     }
   }
 
-
+*/
 	     
 		
    //Global Vars
@@ -76,21 +85,101 @@
     // The err condition allows you to run this on Chrome with web security disabled:  chrome.exe --disable-web-security
    
 
-function onLoad() {
-	
-		try {	
-	    onDeviceReady();
-		//document.addEventListener("deviceready", onDeviceReady, false);
-		}
-		catch (err){
-		onDeviceReady();
-		}
-	
-	}
-	
-	
-	
+ function onLoad() {
+alert(navigator.userAgent); //what do ios8 return?
+ 		var isChrome = /Chrome/.test(navigator.userAgent) && /Google Inc/.test(navigator.vendor);
+		var isSafari = /Safari/.test(navigator.userAgent) && /Apple Computer/.test(navigator.vendor);
+
+if (isChrome) initWEBDB(); // initialize the WebSQL DB
+if (isSafari) alert("You are using Safari!");
+
+ 	
+        document.addEventListener("deviceready", onDeviceReady, false);
+    }
+
     function onDeviceReady() {
+
+		 alert("in On Device Ready");
+
+		//Add the 20 px Top Margin for ios7 and up
+		document.body.style.marginTop = "20px";
+    		     
+
+        var backupURL;
+		var daIndex = 0;
+		
+		localStorage.setItem('backupURL', 'http://www.chardonlabs.com/R2D2.nsf/prereport?createdocument' );
+		localStorage.setItem('backupURL', 'http://www.chardonlabs.com/eReportv4.nsf/iPhone?createdocument' );
+			alert('pre setupuser');
+			 setupUser();	//initDB.js	
+			console.log('Setup User Ran');
+
+		 	 initWEBDB(); //iReport.js
+
+		 	 hide("daJCPText");
+			//Check for blank Tech, if so then go to setup.html
+			
+		
+		
+		//populate the Shrinking List
+		//loadSL();  //iReport.js
+		
+		 	 
+
+  
+	
+	
+	// Add this behavior to all text fields
+   
+	
+    	 
+	 //Get the Tech name from LocalStorage
+   	 document.getElementById('TechName').innerHTML = localStorage.getItem("tech");
+	 document.getElementById('TechName2').innerHTML = localStorage.getItem("tech");
+     //document.getElementById('TechName3').innerHTML = localStorage.getItem("tech");
+	 document.getElementById('TechName4').innerHTML = localStorage.getItem("tech");
+	
+	//Get the Template List Type from localStorage
+
+	localStorage.setItem('listType', 'shrinkingList' ); // init the List Type
+	var listType = localStorage.getItem('listType');
+
+
+	
+//Load Templates based on listType
+	
+//alert("customer_templates " + customer_templates.value);
+	
+/*	
+  	if (listType =='shrinkingList'){
+  	//loadData('ShrinkingList');
+	loadSL(); //loadTemplates.js
+	$('#Client').val("Shrinking List");
+	
+  	//document.getElementById('Client').innerHTML = "Shrinking List";
+  	}
+  		if (listType =='bookView'){
+  	//	loadData('BookView');
+	loadBV(); //loadTemplates.js
+  		document.getElementById('Client').innerHTML = "Book View";
+  	}
+  		if (listType =='onDevice'){
+  	//	loadData('Reports');
+	loadOD(); //loadTemplates.js
+  		document.getElementById('Client').innerHTML = "On Device";
+  	}
+  	
+	checkEmptyCustomer(); //Preload customer templates field with choices
+	
+ */
+  	
+  
+
+    }
+
+
+	
+    function onDeviceReadyOLD12345667() {
 	
 	try{
       	pictureSource=navigator.camera.PictureSourceType;
@@ -397,14 +486,19 @@ function showImage()
 <h1>Choose Customer:</h1>
 <select  data-role="none" name="customer_templates"	id="customer_templates" onChange="preview(); localStorage.setItem('custid', this.value);localStorage.setItem('customerName', this.options[this.selectedIndex].text); myGraphCallback(0);">
 </select> 
+</center>
+
+<!--DEBUG Window --> 
+<textarea id="debugDiv" > Debug </textarea>
+
+
+
+<center>
 <span id ="GraphImage">
  <img src="img/graph.jpg"  alt="Graph" height="30px" width="30px" onclick="hide('preview'); hide('ChooseCustomer'); show('Graph');begin();"> 
 </span>
 
 <div id="preview" style="display: none"><text id='dspCust'></text><br>
-
-
-
 </p>
 <text id='BillAddress'></text><br>
 <text id='emailNotify'></text><br>
@@ -432,6 +526,11 @@ function showImage()
 
 
 </div>
+
+
+
+
+
 
 <!--///////////////////////////////////////   GRAPH  ///////////////////////////////// -->
 <div id ="Graph"  style="display:none" >

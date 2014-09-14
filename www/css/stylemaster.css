@@ -1,3 +1,4 @@
+#debugDiv {height: 150px; width: 270px; border: 1px solid #333;}
 
 #daSLCnt.ui-btn-active {
     background:#61B329 !important;
@@ -12,13 +13,13 @@
 textarea {
      white-space: nowrap; 
     overflow:    scroll; 
-    overflow-y:  scroll;
+    overflow-y:  hidden;
     overflow-x:  hidden;
 
    }
 */
 textarea {
-    //white-space: nowrap;
+    /*white-space: nowrap; */
     overflow:    scroll; 
     overflow-y:  hidden;
     overflow-x:  hidden;
