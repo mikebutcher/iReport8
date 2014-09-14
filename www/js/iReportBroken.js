@@ -152,10 +152,6 @@ function getSLTemplates() {
     
     
     $('body').append('<div id="progress" onClick="$("#progress").remove();"><img align="middle" src="img/downloading.gif">&nbsp;&nbsp;&nbsp;&nbsp;Downloading Templates: <text id="tCount"></div>');
-   
-     var t = setTimeout(" $('#progress').remove();", 4000);
-
-
     getCommandAsync(slURL, "", "SLgotDocsJSON");
 }//end getSLTemplates
 
@@ -363,11 +359,17 @@ function histDocsJSON(oObject) {
 
 
                 // alert('Downloaded: ' + i +' History Records');
-                  // $('#progress').remove();
+                   $('#progress').remove();
 
-                  // $('body').append('<div id="progress2">Initializing Database</div>');
-                   // var t = setTimeout(" $('#progress2').remove();", 800); //10 seconds
+                   $('body').append('<div id="progress2">Initializing Database</div>');
+                    var t = setTimeout(" $('#progress2').remove();", 800); //10 seconds
 
+                    //  $('body').append('<div id="progress">Please Restart iReport</div>');
+                    //var t = setTimeout(" $('#progress').remove();", 500); //.5 seconds
+                    
+                
+                //  $('#customer_templates').selectmenu();
+                //  $('#customer_templates').selectmenu('refresh',true);
                     
                 
     } // end if 
@@ -1760,10 +1762,10 @@ function toggleException(){
 
 function setupUser() {
    
- console.log('In Setup User \n');
+ console.log('In Setup User \n')
 
     var TheTech = localStorage.getItem("tech");
-    console.log("Welcome: "+ TheTech);
+    //alert("Welcome: "+ TheTech);
     //document.getElementById('TechName').innerHTML =localStorage.getItem("tech");
     //var TheTech = localStorage.getItem("username");
     if (TheTech == null || TheTech == '') {
@@ -1775,13 +1777,48 @@ function setupUser() {
 
 
 
-  
+    function initial_setup() {
+        var name = prompt("eReport Setup -  Please enter your Username", "");
+        var pw = prompt("eReport Setup -  Please enter your Domino Password", "");
+
+
+        if (name != null && name != "" && pw != "") {
+
+
+
+            daLogin = doDominoLogin(name, pw); // ajaxLogin.js
+            if (daLogin) {
+                //alert("daLogin succeeded");
+                //Set the tech name based on who is logged in
+                localStorage.setItem("username", name);
+                localStorage.setItem("password", pw);
+
+
+
+                //var TheTech = localStorage.getItem("tech");
+                //var TheTech = localStorage.getItem("username");
+                document.getElementById('TechName').innerHTML = localStorage.getItem("Tech");
+
+
+
+                //alert("hello " + TheTech);
+                show('initSetup');
+            }
+
+
+        }
+    }
  
 
 }
 
 
 
+
+
+
+
+<!--End Initial Setup Function -->
 
 function setTech(daTech) {
     localStorage.setItem("tech", daTech);

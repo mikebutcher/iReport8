@@ -1,4 +1,9 @@
-#debugDiv {height: 150px; width: 270px; border: 1px solid #333;}
+#debugDiv {
+	display:none;
+	height: 150px; 
+	width: 270px;
+	 border: 1px solid #333;
+	}
 
 #daSLCnt.ui-btn-active {
     background:#61B329 !important;

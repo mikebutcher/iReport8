@@ -36,20 +36,17 @@
 <script type="text/javascript" charset="utf-8">
   
   //Console Log
-  /*
-  if (typeof console  != "undefined") 
-  if (typeof console.log != 'undefined')
-    console.olog = console.log;
-else
-  console.olog = function() {};
- */
+ 
 
+/*
 console.log = function(message) {
   //console.olog(message);
   $('#debugDiv').append('</br>' + message +'</br>' );
   //$('#debugDiv').append('<p>' + message + '</p>');
 };
+
 console.error = console.debug = console.info =  console.log
+*/
 
 //End console Log
 
@@ -88,23 +85,20 @@ console.error = console.debug = console.info =  console.log
    
 
  function onLoad() {
-
-		document.addEventListener("deviceready", onDeviceReady, false);
-
-		console.log(navigator.userAgent + '\n') ; //what do ios8 return?
+console.log(navigator.userAgent); //what do ios8 return?
  		var isChrome = /Chrome/.test(navigator.userAgent) && /Google Inc/.test(navigator.vendor);
 		var isSafari = /Safari/.test(navigator.userAgent) && /Apple Computer/.test(navigator.vendor);
 
-//Make Phonegap work on Chrome
-		if (isChrome) {
-			initWEBDB();    //setup  WebSQL 
-			setupUser();	//iReport.js
-		} 
+if (isChrome) initWEBDB(); // initialize the WebSQL DB
+if (isSafari) alert("You are using Safari!");
+
+ 	
+        document.addEventListener("deviceready", onDeviceReady, false);
     }
 
     function onDeviceReady() {
 
-		 console.log("in OnDeviceReady \n");
+		 alert("in On Device Ready");
 
 		//Add the 20 px Top Margin for ios7 and up
 		document.body.style.marginTop = "20px";
