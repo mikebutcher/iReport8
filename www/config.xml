@@ -18,10 +18,13 @@ Mike Butcher
 <icon src="img/iconlogo72x72.png" gap:platform="ios" width="72" height="72" />
 <icon src="img/iconlogo144x144.png" gap:platform="ios" width="144" height="144" />
 <icon src="img/iconlogo76x76.png" gap:platform="ios" width="76" height="76" />
-<icon src="img/iconlogo120x120.png" gap:platform="ios" width="120" height="120" />
+
+<icon src="img/iconlogo120x120.png" gap:platform="ios" width="120" height="120" />
+
 <icon src="img/iconlogo152x152.png" gap:platform="ios" width="152" height="152" />
 
-<gap:splash src="splash640x960.png" gap:platform="ios" width="640" height="960" />
+<gap:splash src="splash640x960.png" gap:platform="ios" width="640" height="960" />
+
 <gap:splash src="splash640x960.png" gap:platform="ios" width="640" height="1136" />
 
 
