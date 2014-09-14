@@ -30,6 +30,12 @@ histURL = "http://www.chardonlabs.com/eReportv4.nsf/iPhoneHistory2?ReadViewEntri
 
 
 function getTemplates() {
+
+    $('#progress').remove();
+ $('body').append('<div id="progress1">Connecting to Chardon</div>');
+var t = setTimeout(" $('#progress1').remove();", 2800); //10 seconds
+
+
      var username = localStorage.getItem("username");
      var pw = localStorage.getItem("password");
     loginStatus = doDominoLoginSilent(username, pw);
@@ -101,8 +107,8 @@ function initWEBDB() {
 
 
     });
-	
-	
+    
+    
     console.log("initWebDB success");
 }
 
@@ -123,28 +129,28 @@ function getSLTemplates() {
        // tx.executeSql('DELETE FROM ShrinkingList where id > 0', [] );
        
   
-	   	var sql = "DELETE FROM ShrinkingList where id > 0";
-				try {
-					tx.executeSql(sql, [], SLSuccess, SLFail);
-				}
-				catch(err)
-				{
-					alert(err);
-				}
-	   
-	   
-	  function SLSuccess(){
-	       console.log("SL Initialized");
-	   }
-	  function SLFail(err){
-		console.log("SL Initialize Failure");
-	   }
-	   
-	   
-    });	
-		
-	
-	
+        var sql = "DELETE FROM ShrinkingList where id > 0";
+                try {
+                    tx.executeSql(sql, [], SLSuccess, SLFail);
+                }
+                catch(err)
+                {
+                    alert(err);
+                }
+       
+       
+      function SLSuccess(){
+           console.log("SL Initialized");
+       }
+      function SLFail(err){
+        console.log("SL Initialize Failure");
+       }
+       
+       
+    }); 
+        
+    
+    
     $('body').append('<div id="progress" onClick="$("#progress").remove();"><img align="middle" src="img/downloading.gif">&nbsp;&nbsp;&nbsp;&nbsp;Downloading Templates: <text id="tCount"></div>');
     getCommandAsync(slURL, "", "SLgotDocsJSON");
 }//end getSLTemplates
@@ -153,10 +159,10 @@ function getSLTemplates() {
 
 
 function getBVTemplates() {
-		localDB.transaction(function(tx) {
-				tx.executeSql('DELETE FROM BookView where id > 0', [] );
-			   
-			});
+        localDB.transaction(function(tx) {
+                tx.executeSql('DELETE FROM BookView where id > 0', [] );
+               
+            });
     techname = localStorage.getItem("tech");
     //alert("Getting Templates for " + techname); 
     //$('body').append('<div id="progress" onClick="$("#progress").remove();"><img align="middle" src="img/downloading.gif">&nbsp;&nbsp;&nbsp;&nbsp;Downloading Templates : <text id="tCount"></div>');
@@ -283,55 +289,55 @@ function histDocsJSON(oObject) {
     //alert("in History JSON");
     //$("#progress").remove();
     var viewentries = oObject.viewentry;
-	
-	if(typeof viewentries !== "undefined") {
-    				var n_viewentries = viewentries.length;
-					//alert("History count " + n_viewentries);
-				   
+    
+    if(typeof viewentries !== "undefined") {
+                    var n_viewentries = viewentries.length;
+                    //alert("History count " + n_viewentries);
+                   
 
-					var entrydata = viewentries[0].entrydata;
+                    var entrydata = viewentries[0].entrydata;
 
-					var sCol0 = returnJSONValue(entrydata[0]);
+                    var sCol0 = returnJSONValue(entrydata[0]);
 
-					daLength = sCol0.length
+                    daLength = sCol0.length
 
 
-					for (var i = 0; i < n_viewentries; i++) {
+                    for (var i = 0; i < n_viewentries; i++) {
 
-						var unidAttr = viewentries[i]["@unid"];
+                        var unidAttr = viewentries[i]["@unid"];
 
-						var entrydata = viewentries[i].entrydata;
-						var sCol0 = returnJSONValue(entrydata[0]);
-						//alert("sCol0 "+ sCol0);
-						var sCol1 = returnJSONValue(entrydata[1]);
-						//alert("sCol1 "+ sCol1);
-						var sCol2 = returnJSONValue(entrydata[2]);
-						var sCol3 = returnJSONValue(entrydata[3]);
-						var sCol4 = returnJSONValue(entrydata[4]);
-						var sCol5 = returnJSONValue(entrydata[5]);
-						var sCol6 = returnJSONValue(entrydata[6]);
-						var sCol7 = returnJSONValue(entrydata[7]);
-						var sCol8 = returnJSONValue(entrydata[8]);
-						var sCol9 = returnJSONValue(entrydata[9]);
-						//alert("sCol9  Report Date "+ sCol9);
-						var sCol10 = returnJSONValue(entrydata[10]);
-						var sCol11 = returnJSONValue(entrydata[11]);
-						var sCol12 = returnJSONValue(entrydata[12]);
-						var sCol13 = returnJSONValue(entrydata[13]);
-						var sCol14 = returnJSONValue(entrydata[14]);
-						var sCol15 = returnJSONValue(entrydata[15]);
-						var sCol16 = returnJSONValue(entrydata[16]);
-						var sCol17 = returnJSONValue(entrydata[17]);
-						var sCol18 = returnJSONValue(entrydata[18]);
-						var sCol19 = returnJSONValue(entrydata[19]);
-						var sCol20 = returnJSONValue(entrydata[20]);
-						var sCol21 = returnJSONValue(entrydata[21]);
-						var sCol22 = returnJSONValue(entrydata[22]);
-						var sCol23 = returnJSONValue(entrydata[23]);
+                        var entrydata = viewentries[i].entrydata;
+                        var sCol0 = returnJSONValue(entrydata[0]);
+                        //alert("sCol0 "+ sCol0);
+                        var sCol1 = returnJSONValue(entrydata[1]);
+                        //alert("sCol1 "+ sCol1);
+                        var sCol2 = returnJSONValue(entrydata[2]);
+                        var sCol3 = returnJSONValue(entrydata[3]);
+                        var sCol4 = returnJSONValue(entrydata[4]);
+                        var sCol5 = returnJSONValue(entrydata[5]);
+                        var sCol6 = returnJSONValue(entrydata[6]);
+                        var sCol7 = returnJSONValue(entrydata[7]);
+                        var sCol8 = returnJSONValue(entrydata[8]);
+                        var sCol9 = returnJSONValue(entrydata[9]);
+                        //alert("sCol9  Report Date "+ sCol9);
+                        var sCol10 = returnJSONValue(entrydata[10]);
+                        var sCol11 = returnJSONValue(entrydata[11]);
+                        var sCol12 = returnJSONValue(entrydata[12]);
+                        var sCol13 = returnJSONValue(entrydata[13]);
+                        var sCol14 = returnJSONValue(entrydata[14]);
+                        var sCol15 = returnJSONValue(entrydata[15]);
+                        var sCol16 = returnJSONValue(entrydata[16]);
+                        var sCol17 = returnJSONValue(entrydata[17]);
+                        var sCol18 = returnJSONValue(entrydata[18]);
+                        var sCol19 = returnJSONValue(entrydata[19]);
+                        var sCol20 = returnJSONValue(entrydata[20]);
+                        var sCol21 = returnJSONValue(entrydata[21]);
+                        var sCol22 = returnJSONValue(entrydata[22]);
+                        var sCol23 = returnJSONValue(entrydata[23]);
                        
-				
-						//write values to the Tables
-					HistoryStatus =	addHistory(sCol0, sCol1, sCol2, sCol3, sCol4, sCol5, sCol6, sCol7, sCol8, sCol9, sCol10, sCol11, sCol12, sCol13, sCol14, sCol15, sCol16, sCol17, sCol18, sCol19, sCol20, sCol21, sCol22, i);
+                
+                        //write values to the Tables
+                    HistoryStatus = addHistory(sCol0, sCol1, sCol2, sCol3, sCol4, sCol5, sCol6, sCol7, sCol8, sCol9, sCol10, sCol11, sCol12, sCol13, sCol14, sCol15, sCol16, sCol17, sCol18, sCol19, sCol20, sCol21, sCol22, i);
                   console.log("Inserted History Record: "+ HistoryStatus);
           
                         var tmpcustname = returnJSONValue(entrydata[1]);
@@ -341,7 +347,7 @@ function histDocsJSON(oObject) {
 
 
 
-					} //EndFor Loop
+                    } //EndFor Loop
 
                     if (HistoryStatus <i-1){
                        // alert('less' + i +' HistoryStatus '+ HistoryStatus );
@@ -352,23 +358,25 @@ function histDocsJSON(oObject) {
                     }
 
 
-				// alert('Downloaded: ' + i +' History Records');
-				   $('#progress').remove();
-				   $('body').append('<div id="progress">Initializing Database</div>');
-					var t = setTimeout(" $('#progress').remove();", 10000); //10 seconds
-					//  $('body').append('<div id="progress">Please Restart iReport</div>');
-					//var t = setTimeout(" $('#progress').remove();", 500); //.5 seconds
-					
-				
-				//	$('#customer_templates').selectmenu();
-				//	$('#customer_templates').selectmenu('refresh',true);
-					
-				
-	} // end if 
-	else {
-	var t = setTimeout(" $('#progress').remove();", 2000);
-	}
-	
+                // alert('Downloaded: ' + i +' History Records');
+                   $('#progress').remove();
+
+                   $('body').append('<div id="progress2">Initializing Database</div>');
+                    var t = setTimeout(" $('#progress2').remove();", 800); //10 seconds
+
+                    //  $('body').append('<div id="progress">Please Restart iReport</div>');
+                    //var t = setTimeout(" $('#progress').remove();", 500); //.5 seconds
+                    
+                
+                //  $('#customer_templates').selectmenu();
+                //  $('#customer_templates').selectmenu('refresh',true);
+                    
+                
+    } // end if 
+    else {
+    var t = setTimeout(" $('#progress').remove();", 2000);
+    }
+    
 } //end histDocJSON
 
 function TechiciansJSON(oObject) {
@@ -395,22 +403,22 @@ function TechiciansJSON(oObject) {
 
 
 function SLgotDocsJSON(oObject) {
-alert('SLgotDocsJSON');
+
     document.getElementById('customer_templates').innerHTML = "";
     localStorage.setItem("customer_templates_SL", "");
     var viewentries = oObject.viewentry;
-    try{	var n_viewentries = viewentries.length;}
-	
-	catch(e){
-	var n_viewentries = 0;
-	}
-	
-	  try{	    var slcount = viewentries.length;}
-	
-	catch(e){
-	var slcount = 0;
-	}
-	
+    try{    var n_viewentries = viewentries.length;}
+    
+    catch(e){
+    var n_viewentries = 0;
+    }
+    
+      try{      var slcount = viewentries.length;}
+    
+    catch(e){
+    var slcount = 0;
+    }
+    
 
     document.getElementById('SLCnt').innerHTML = slcount;
     //document.getElementById('SLCnt').innerHTML = "</br>"+ n_viewentries+"<p>Shrink List";
@@ -441,8 +449,8 @@ alert('SLgotDocsJSON');
         var sCol14 = returnJSONValue(entrydata[14]);
         var sCol15 = returnJSONValue(entrydata[15]);
         var sCol16 = returnJSONValue(entrydata[16]);
-	    var sCol17 = returnJSONValue(entrydata[17]);
-	    var sCol18 = returnJSONValue(entrydata[18]);
+        var sCol17 = returnJSONValue(entrydata[17]);
+        var sCol18 = returnJSONValue(entrydata[18]);
         var sCol19 = returnJSONValue(entrydata[19]);
         var sCol20 = returnJSONValue(entrydata[20]);
         var sCol21 = returnJSONValue(entrydata[21]);
@@ -471,9 +479,10 @@ alert('SLgotDocsJSON');
 
 
     } //EndFor Loop
-		$('#customer_templates').selectmenu();
-	$('#customer_templates').selectmenu('refresh',true);
-alert('Downloaded: ' + i +' SL Templates');
+        $('#customer_templates').selectmenu();
+    $('#customer_templates').selectmenu('refresh',true);
+ $('body').append('<div id="progress3">Saved SL Templates: '+i+' </div>');
+var t = setTimeout(" $('#progress3').remove();", 3500);
    // var t = setTimeout(" $('#progress').remove();", 1000);
     //updateCounts();
 } //End Function    
@@ -488,87 +497,88 @@ function BVgotDocsJSON(oObject) {
     localStorage.setItem("customer_templates_BV", "");
 
     var viewentries = oObject.viewentry;
-	
-	if(typeof viewentries !== "undefined") {
-	
-				var n_viewentries = viewentries.length;
+    
+    if(typeof viewentries !== "undefined") {
+    
+                var n_viewentries = viewentries.length;
 
-				//alert("Rows: " +n_viewentries);
-				//$('body').append('<div id="progress">Saved: BV: '+n_viewentries +' SL:'+slcount+' Templates</div>');
-				document.getElementById('BVCnt').innerHTML = n_viewentries;
-				//document.getElementById('BVCnt').innerHTML = document.getElementById('BVCnt').innerHTML + n_viewentries;
-				//document.getElementById('BVCnt').innerHTML = "<h1>"+n_viewentries+"</h1></br>Book View";
-				//document.getElementById('BVCnt').innerHTML = "</br>"+ n_viewentries+"<p>Book View";
-				localStorage.setItem("BVcount", viewentries.length);
+                //alert("Rows: " +n_viewentries);
+                //$('body').append('<div id="progress">Saved: BV: '+n_viewentries +' SL:'+slcount+' Templates</div>');
+                document.getElementById('BVCnt').innerHTML = n_viewentries;
+                //document.getElementById('BVCnt').innerHTML = document.getElementById('BVCnt').innerHTML + n_viewentries;
+                //document.getElementById('BVCnt').innerHTML = "<h1>"+n_viewentries+"</h1></br>Book View";
+                //document.getElementById('BVCnt').innerHTML = "</br>"+ n_viewentries+"<p>Book View";
+                localStorage.setItem("BVcount", viewentries.length);
 
-				//document.getElementById('tCount').innerHTML = n_viewentries;
-				for (var i = 0; i < n_viewentries; i++) {
+                //document.getElementById('tCount').innerHTML = n_viewentries;
+                for (var i = 0; i < n_viewentries; i++) {
 
 
 
-					var unidAttr = viewentries[i]["@unid"];
+                    var unidAttr = viewentries[i]["@unid"];
 
-					var entrydata = viewentries[i].entrydata;
-					var sCol0 = returnJSONValue(entrydata[0]);
-					var sCol1 = returnJSONValue(entrydata[1]);
-					var sCol2 = returnJSONValue(entrydata[2]);
-					var sCol3 = returnJSONValue(entrydata[3]);
-					var sCol4 = returnJSONValue(entrydata[4]);
-					var sCol5 = returnJSONValue(entrydata[5]);
-					var sCol6 = returnJSONValue(entrydata[6]);
-					var sCol7 = returnJSONValue(entrydata[7]);
-					var sCol8 = returnJSONValue(entrydata[8]);
-					var sCol9 = returnJSONValue(entrydata[9]);
-					var sCol10 = returnJSONValue(entrydata[10]);
-					//alert(sCol10);
-					var sCol11 = returnJSONValue(entrydata[11]);
-					//alert(sCol11);
-					var sCol12 = returnJSONValue(entrydata[12]);
-					//alert(sCol12);
-					var sCol13 = returnJSONValue(entrydata[13]);
-					var sCol14 = returnJSONValue(entrydata[14]);
-					var sCol15 = returnJSONValue(entrydata[15]);
-					//alert(sCol15); //LastMonths Data
-					var sCol16 = returnJSONValue(entrydata[16]);
-					var sCol17 = returnJSONValue(entrydata[17]);
-					var sCol18 = returnJSONValue(entrydata[18]);
-					var sCol19 = returnJSONValue(entrydata[19]);
-					var sCol20 = returnJSONValue(entrydata[20]);
-					var sCol21 = returnJSONValue(entrydata[21]);
-					var sCol22 = returnJSONValue(entrydata[22]);
+                    var entrydata = viewentries[i].entrydata;
+                    var sCol0 = returnJSONValue(entrydata[0]);
+                    var sCol1 = returnJSONValue(entrydata[1]);
+                    var sCol2 = returnJSONValue(entrydata[2]);
+                    var sCol3 = returnJSONValue(entrydata[3]);
+                    var sCol4 = returnJSONValue(entrydata[4]);
+                    var sCol5 = returnJSONValue(entrydata[5]);
+                    var sCol6 = returnJSONValue(entrydata[6]);
+                    var sCol7 = returnJSONValue(entrydata[7]);
+                    var sCol8 = returnJSONValue(entrydata[8]);
+                    var sCol9 = returnJSONValue(entrydata[9]);
+                    var sCol10 = returnJSONValue(entrydata[10]);
+                    //alert(sCol10);
+                    var sCol11 = returnJSONValue(entrydata[11]);
+                    //alert(sCol11);
+                    var sCol12 = returnJSONValue(entrydata[12]);
+                    //alert(sCol12);
+                    var sCol13 = returnJSONValue(entrydata[13]);
+                    var sCol14 = returnJSONValue(entrydata[14]);
+                    var sCol15 = returnJSONValue(entrydata[15]);
+                    //alert(sCol15); //LastMonths Data
+                    var sCol16 = returnJSONValue(entrydata[16]);
+                    var sCol17 = returnJSONValue(entrydata[17]);
+                    var sCol18 = returnJSONValue(entrydata[18]);
+                    var sCol19 = returnJSONValue(entrydata[19]);
+                    var sCol20 = returnJSONValue(entrydata[20]);
+                    var sCol21 = returnJSONValue(entrydata[21]);
+                    var sCol22 = returnJSONValue(entrydata[22]);
 
-					var sCol23 = returnJSONValue(entrydata[23]);
-					var sCol24 = returnJSONValue(entrydata[24]);
-					var sCol25 = returnJSONValue(entrydata[25]);
-					var sCol26 = returnJSONValue(entrydata[26]);
-					var sCol27 = returnJSONValue(entrydata[27]);
-					var sCol28 = returnJSONValue(entrydata[28]);
+                    var sCol23 = returnJSONValue(entrydata[23]);
+                    var sCol24 = returnJSONValue(entrydata[24]);
+                    var sCol25 = returnJSONValue(entrydata[25]);
+                    var sCol26 = returnJSONValue(entrydata[26]);
+                    var sCol27 = returnJSONValue(entrydata[27]);
+                    var sCol28 = returnJSONValue(entrydata[28]);
 
-					
-					//var sCol20 = returnJSONValue(entrydata[20])[0];
-					//write values to the Tables
-					addBookView(sCol0, sCol1, sCol2, sCol3, sCol4, sCol5, sCol6, sCol7, sCol8, sCol9, sCol10, sCol11, sCol12, sCol13, sCol14, sCol15, sCol16, sCol17, sCol18, sCol19, sCol20, sCol21, sCol22, sCol23, sCol24, sCol25, sCol26, sCol27, sCol28);
-					//addShrinkingList(sCol0, sCol1);
-					//Build the Customer Templates List & Make them a consistent width 35 chars
-					var tmpcustname = returnJSONValue(entrydata[1]);
-					
-					tmpcustname2 = tmpcustname.toString();
+                    
+                    //var sCol20 = returnJSONValue(entrydata[20])[0];
+                    //write values to the Tables
+                    addBookView(sCol0, sCol1, sCol2, sCol3, sCol4, sCol5, sCol6, sCol7, sCol8, sCol9, sCol10, sCol11, sCol12, sCol13, sCol14, sCol15, sCol16, sCol17, sCol18, sCol19, sCol20, sCol21, sCol22, sCol23, sCol24, sCol25, sCol26, sCol27, sCol28);
+                    //addShrinkingList(sCol0, sCol1);
+                    //Build the Customer Templates List & Make them a consistent width 35 chars
+                    var tmpcustname = returnJSONValue(entrydata[1]);
+                    
+                    tmpcustname2 = tmpcustname.toString();
                     console.log('Added to BookView Table: ' + tmpcustname2);
 
-					document.getElementById('customer_templates').innerHTML += '<option value ="' + sCol0 + '">' + tmpcustname2.substring(0, 30) + '</option>';
+                    document.getElementById('customer_templates').innerHTML += '<option value ="' + sCol0 + '">' + tmpcustname2.substring(0, 30) + '</option>';
 
 
 
 
-				} //EndFor Loop
-			//$('body').append('<div id="progress">Saved: BV: '+n_viewentries +' SL:'+slcount+'</div>');
-			
-			$('#customer_templates').selectmenu();
-			$('#customer_templates').selectmenu('refresh',true);
-			alert('Downloaded: ' + i +' BV Templates');
-			//var t = setTimeout(" $('#progress').remove();", 3000);
-			//updateCounts();
-			var slcount = localStorage.getItem("slcount");
+                } //EndFor Loop
+            //$('body').append('<div id="progress">Saved: BV: '+n_viewentries +' SL:'+slcount+'</div>');
+            
+            $('#customer_templates').selectmenu();
+            $('#customer_templates').selectmenu('refresh',true);
+            $('body').append('<div id="progress4">Saved: BookView Templates: '+i+' </div>');
+            var t = setTimeout(" $('#progress4').remove();", 4500);
+            //var t = setTimeout(" $('#progress').remove();", 3000);
+            //updateCounts();
+            var slcount = localStorage.getItem("slcount");
             return(true);
    } //End if
 } //End BVgotDocsJSON  Function
@@ -601,15 +611,15 @@ function addHistory(custid, BillName, BillADDR1, Notify, BillADDR2, BillCity, Bi
   function successCBBV() {
         console.log("BookView record inserted into Table successfully!");
     }
-	
-	  function successCBSL() {
+    
+      function successCBSL() {
         console.log("ShrinkList record inserted into Table Successfully!");
     }
-	
-	  function successCBTemplate() {
+    
+      function successCBTemplate() {
         console.log("Template Table record inserted success!");
     }
-	
+    
 function addBookView(custid, BillName, BillADDR1, Notify, BillADDR2, BillCity, BillState, BillZip, CorporateName, parseEquipType, parseEquipname, parseEquipTestNames, parseRange, equipDataCollection, LastMonthEquipDataCollection, cyclesLow, cyclesHigh, accessGivenTo, tech, Status, LastMonthEquipDataCollection2, LastMonthEquipDataCollection3, ShipPhone, LastMonthEquipDataCollection4, LastMonthEquipDataCollection5, LastMonthEquipDataCollection6, LastMonthEquipDataCollection7, LastMonthEquipDataCollection8, LastMonthEquipDataCollection9) {
 
     localDB.transaction(function(tx) {
@@ -619,7 +629,7 @@ function addBookView(custid, BillName, BillADDR1, Notify, BillADDR2, BillCity, B
 
 function addTemplate(custid, BillName, BillADDR1, Notify, BillADDR2, BillCity, BillState, BillZip, CorporateName, parseEquipType, parseEquipname, parseEquipTestNames, parseRange, equipDataCollection, LastMonthEquipDataCollection, cyclesLow, cyclesHigh, accessGivenTo, tech, Status, LastMonthEquipDataCollection2, LastMonthEquipDataCollection3, ShipPhone, LastMonthEquipDataCollection4, LastMonthEquipDataCollection5, LastMonthEquipDataCollection6, LastMonthEquipDataCollection7, LastMonthEquipDataCollection8, LastMonthEquipDataCollection9) {
  
-	localDB.transaction(function(tx) {
+    localDB.transaction(function(tx) {
         tx.executeSql('INSERT INTO TEMPLATES (custid, BillName, BillADDR1, Notify, BillADDR2, BillCity, BillState, BillZip, CorporateName, parseEquipType, parseEquipname, parseEquipTestNames, parseRange, equipDataCollection, cyclesLow, cyclesHigh, accessGivenTo, tech, Status, ShipPhone) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)', [custid, BillName, BillADDR1, Notify, BillADDR2, BillCity, BillState, BillZip, CorporateName, parseEquipType, parseEquipname, parseEquipTestNames, parseRange, equipDataCollection, cyclesLow, cyclesHigh, accessGivenTo, tech, Status, ShipPhone],successCBTemplate, errorCB);
     });
 }
@@ -820,8 +830,8 @@ function resetDB2() {
 
     var test = confirmDelete2();
 
-	var test = confirmDelete3();
-	
+    var test = confirmDelete3();
+    
   
     if (test == 1) {
               reportDB.transaction(function(tx) {
@@ -832,7 +842,9 @@ function resetDB2() {
 
       
 
-     alert("Success - iReports Removed from Device.");
+     //alert("Success - iReports Removed from Device.");
+      $('body').append('<div id="progress4">Success - iReports Removed from Device.</div>');
+            var t = setTimeout(" $('#progress4').remove();", 2500);
 
     } else {
         //alert("in return");
@@ -961,7 +973,7 @@ function removeOptionSelected() {
 
 
 function loadBV() {
-	hide('preview');
+    hide('preview');
     clearCustTemplates();
     document.getElementById('customer_templates').innerHTML = '<option value =""></option>';
 
@@ -990,25 +1002,25 @@ function loadBV() {
       //  alert(  '<option value ="'+sCol0 +'">'+ sCol1  +'</option>');
             document.getElementById('customer_templates').innerHTML += '<option value ="' + sCol0 + '">' + sCol1 + '</option>';
         }
-		//alert("BV List Loaded");
-		$('#customer_templates').selectmenu();
-		$('#customer_templates').selectmenu('refresh',true);
+        //alert("BV List Loaded");
+        $('#customer_templates').selectmenu();
+        $('#customer_templates').selectmenu('refresh',true);
     }
-	
+    
 }
 
 
 function loadSL() {
 
-	hide('preview');
-	
+    hide('preview');
+    
     clearCustTemplates();
-	
+    
     document.getElementById('customer_templates').innerHTML = '<option value =""></option>';
-	
+    
     console.log("Loading Shrinking list");
    
-	//initWEBDB();
+    //initWEBDB();
     localDB.transaction(
 
     function(transaction) {
@@ -1028,16 +1040,16 @@ function loadSL() {
           // alert(  '<option value ="'+sCol0 +'">'+ sCol1 +'</option>');
             document.getElementById('customer_templates').innerHTML += '<option value ="' + sCol0 + '">' + sCol1 + '</option>';
         }
-		//alert("SL Loaded successfully");
-		//$('#customer_templates').selectmenu();
-		//$('#customer_templates').selectmenu('refresh',true);
+        //alert("SL Loaded successfully");
+        //$('#customer_templates').selectmenu();
+        //$('#customer_templates').selectmenu('refresh',true);
     }
-	
+    
 
-	} //End loadSL
+    } //End loadSL
 
 function loadOD() {
-	hide('preview');
+    hide('preview');
     //alert("load OD");
     clearCustTemplates();
     document.getElementById('customer_templates').innerHTML = '<option value =""></option>';
@@ -1072,12 +1084,12 @@ function loadOD() {
             //alert(  '<option value ="'+sCol0 +'">'+ sCol1.substring(0,30)  +'</option>');
             document.getElementById('customer_templates').innerHTML += '<option value ="' + sCol0 + '">' + sCol1.substring(0, 430) + '</option>';
         }
-		//alert("Drafts - Loaded successfully");
-		//$('#customer_templates').selectmenu();
-		//$('#customer_templates').selectmenu('refresh',true);
-		
+        //alert("Drafts - Loaded successfully");
+        //$('#customer_templates').selectmenu();
+        //$('#customer_templates').selectmenu('refresh',true);
+        
     }
-	
+    
 }
 
 
@@ -1112,9 +1124,9 @@ function loadBU() {
             //alert(  '<option value ="'+sCol0 +'">'+ sCol1.substring(0,30)  +'</option>');
             document.getElementById('customer_templatesBU').innerHTML += '<option value ="' + sCol0 + '">' + sCol1.substring(0, 430) + '</option>';
         }
-		//alert("On Device Loaded successfully");
-		//$('#customer_templates').selectmenu();
-		//$('#customer_templates').selectmenu('refresh',true);
+        //alert("On Device Loaded successfully");
+        //$('#customer_templates').selectmenu();
+        //$('#customer_templates').selectmenu('refresh',true);
     }
 
 }
@@ -1171,12 +1183,12 @@ function go() {
         }
 
     }
-	
-//9-10-12 Calc Ranges Function re-written	
+    
+//9-10-12 Calc Ranges Function re-written   
 //12-14-12  Add the .toFixed(2)  to the Ranges to cut off after 2 decimals!
 //10-13-13  Removed the .toFixed(2)  to the Ranges to cut off after 2 decimals!
 function calcRanges(){
-	
+    
 
     temp = document.forms[0].PDAEquipRange.value;
     //alert(temp);
@@ -1196,12 +1208,12 @@ function calcRanges(){
     secondpart = cyclesArray[1] * document.forms[0].Conductivity.value;
     //alert("second part"+ secondpart);
     
-	//12-13-12 trimmed to 2 decimals
-	//conductivityRange = firstpart.toFixed(2) + " - " + secondpart.toFixed(2);
-	conductivityRange = firstpart+ " - " + secondpart;
-	
-	
-	
+    //12-13-12 trimmed to 2 decimals
+    //conductivityRange = firstpart.toFixed(2) + " - " + secondpart.toFixed(2);
+    conductivityRange = firstpart+ " - " + secondpart;
+    
+    
+    
     //alert("conductivity range  " + conductivityRange);
     temp = document.forms[0].PDAEquipRange.value;
     //alert(temp);
@@ -1228,8 +1240,8 @@ function calcRanges(){
     AlkValue = document.forms[0].alkalinity.value;
     firstpart = cyclesArray[0] * AlkValue;
     secondpart = cyclesArray[1] * AlkValue;
-	//AlkValue = firstpart.toFixed(2) + " - " + secondpart.toFixed(2);
-	AlkValue = firstpart+ " - " + secondpart;
+    //AlkValue = firstpart.toFixed(2) + " - " + secondpart.toFixed(2);
+    AlkValue = firstpart+ " - " + secondpart;
     //alert(conductivityRange);
     temp = document.forms[0].PDAEquipRange.value;
 
@@ -1241,7 +1253,7 @@ function calcRanges(){
     firstpart = cyclesArray[0] * Chlorides;
     secondpart = cyclesArray[1] * Chlorides;
     //Chlorides = firstpart.toFixed(2) + " - " + secondpart.toFixed(2);
-	Chlorides = firstpart + " - " + secondpart;
+    Chlorides = firstpart + " - " + secondpart;
     //alert(conductivityRange);
     temp = document.forms[0].PDAEquipRange.value;
     //alert(temp);
@@ -1270,9 +1282,9 @@ return;
 */
 
 
-   	 goloadEquip();
-	 
-	 //9-6-12  Load Equipment first
+     goloadEquip();
+     
+     //9-6-12  Load Equipment first
 
 
     function goloadEquip() {
@@ -1289,14 +1301,14 @@ return;
         s1 = s * 1;
         e1 = e * 1;
 
-		//alert(e1-s1);
-		
+        //alert(e1-s1);
+        
         //PDA Equip Test Rows 
-		
-		PDAEquipTest
-		//6-14-12  Dynamically set the number of rows in the equipment
-		//document.getElementById('PDAEquipTest').rows = (e1-s1);
-		
+        
+        PDAEquipTest
+        //6-14-12  Dynamically set the number of rows in the equipment
+        //document.getElementById('PDAEquipTest').rows = (e1-s1);
+        
         //build an array
         var temp = new Array();
         temp = document.forms[0].parseEquipTestNames.value.split('\n');
@@ -1343,8 +1355,8 @@ return;
         frm.pdaDataCollectionHist.value = history1.join('\n');
 
 
-		
-		
+        
+        
         //4-25-12 new history way
         var tempDataHist10 = new Array();
         tempDataHist10 = document.forms[0].HistoryEquipDataCollection.value.split('\n');
@@ -1354,12 +1366,12 @@ return;
 
         //End new History way
 
-		
-		//9-10-12 Calculate the Ranges a New Way
-		calcRanges();
-		
+        
+        //9-10-12 Calculate the Ranges a New Way
+        calcRanges();
+        
 
-			
+            
         var listType = localStorage.getItem('listType');
         //alert(listType);
         temp = document.forms[0].equipDataCollection.value.split('\n');
@@ -1388,12 +1400,12 @@ return;
 
         var selectedEquip = document.forms[0].EquipList.selectedIndex;
         try{
-		var daJCPennyTest = document.forms[0].EquipList.options[selectedEquip].text;
-		}
-		catch (error)	{
-			//catch
-		}
-		
+        var daJCPennyTest = document.forms[0].EquipList.options[selectedEquip].text;
+        }
+        catch (error)   {
+            //catch
+        }
+        
         //This has to match the equipment name in the Matrix in the C2 database
         if (daJCPennyTest == "JCP Water Treatment Task Sheet" | daJCPennyTest == "WTTS") {
 
@@ -1445,29 +1457,31 @@ function completeReport(unid, fieldname, value) {
    
    //alert("in completeReport " + unid +" " + fieldname + " " +value);
     
-	reportDB.transaction(
+    reportDB.transaction(
 
     function(tx) {
         tx.executeSql("UPDATE Reports Set Status = 'Completed' where timestamp = " + unid +"", [], completeReportHandler, errorHandler);
     });
 
-	
-	//Callback for setting the status
-	function completeReportHandler(transaction, results) {
-	//alert("in the completeReportHandler " + results.rows.length);
+    
+    //Callback for setting the status
+    function completeReportHandler(transaction, results) {
+    //alert("in the completeReportHandler " + results.rows.length);
     //alert("updated " + fieldname);
-	
-	var custid = document.getElementById('customer_templates').value;
+    
+    var custid = document.getElementById('customer_templates').value;
     SetEndTime(custid);
-	
-	alert('Contacting Server ...'); 
-	
-	var t = setTimeout("syncData();", 500);
-	
+    
+    //alert('Contacting Server ...'); 
+     $('body').append('<div id="progress">Contacting Chardon Labs Server ... '+i+' </div>');
+    var t = setTimeout(" $('#progress').remove();", 500);
+    
+    var t = setTimeout("syncData();", 500);
+    
 
-	
-	}
-	
+    
+    }
+    
 
 
 }
@@ -1520,12 +1534,12 @@ function saveReport2(custid, fieldname, value) {
         alert("Error saving row: " + ex.message);
     }
 
-	  //save to localstorage 
+      //save to localstorage 
     localStorage.setItem(custid + fieldname, value);
 
     temp = localStorage.getItem(custid + fieldname);
     //    alert(temp);
-	
+    
     //var t = setTimeout("$('#progress').remove();", 200);
 
 }
@@ -1644,10 +1658,10 @@ function preview() {
                     function (transaction) {
                         transaction.executeSql("SELECT * from Reports where status !='Archived' AND custid='"+custid+"';", [], dataHandlerPreview, errorHandler);}
                     ); 
-					
-						//10-09-12 Fixed Database / Table to be reportDB
-						hide('preview');
-					
+                    
+                        //10-09-12 Fixed Database / Table to be reportDB
+                        hide('preview');
+                    
       //9-4-12 Fixed On Device bug with the above SQL statement
     }
 
@@ -1690,11 +1704,11 @@ function dataHandlerPreview(transaction, results) {
         }
         catch (err) {
 
-			hide("preview");
-			//show("preview");
+            hide("preview");
+            //show("preview");
         }
-		
-		
+        
+        
 
     }
 }
@@ -1717,27 +1731,27 @@ function vibrate() {
 
 function toggleException(){
 
-			var test = document.forms[0].except.src;
-		
-				
-					if (test.indexOf("no") ==-1) {
-					
-						document.forms[0].except.src='img/exCheckedno.png';
-						var custid = localStorage.getItem('custid');
-					    saveReport(custid, "exception", "No");
-					}
-					else
-					{
-						
-						document.forms[0].except.src='img/exChecked.png';
-						var custid = localStorage.getItem('custid');
-						saveReport(custid, "exception", "Yes");
-					}
+            var test = document.forms[0].except.src;
+        
+                
+                    if (test.indexOf("no") ==-1) {
+                    
+                        document.forms[0].except.src='img/exCheckedno.png';
+                        var custid = localStorage.getItem('custid');
+                        saveReport(custid, "exception", "No");
+                    }
+                    else
+                    {
+                        
+                        document.forms[0].except.src='img/exChecked.png';
+                        var custid = localStorage.getItem('custid');
+                        saveReport(custid, "exception", "Yes");
+                    }
 
-				
+                
 
-			
-				
+            
+                
 
 }//end toggleException
 
@@ -1986,4 +2000,3 @@ function doDominoLoginSilent(username, password) {
     };
 }
 <!--End Ajax Login -->
-

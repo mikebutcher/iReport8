@@ -17,12 +17,26 @@
 
 <script type="text/javascript" charset="utf-8">
     // Wait for PhoneGap to load
-    //
-    function onLoad() {
+    $(document).ready(function() {
+    // are we running in native app or in a browser?
+    window.isphone = false;
+    if(document.URL.indexOf("http://") === -1 
+        && document.URL.indexOf("https://") === -1) {
+        window.isphone = true;
+    }
 
+    if( window.isphone ) {
         document.addEventListener("deviceready", onDeviceReady, false);
-        
-          var tech =	 localStorage.getItem("tech");
+    } else {
+        onDeviceReady();
+    }
+});
+
+   
+    // PhoneGap is ready
+    //
+    function onDeviceReady() {
+    	var tech =	 localStorage.getItem("tech");
           //alert(tech);
 
            var pw =	 localStorage.getItem("password");
@@ -35,14 +49,8 @@
          var TheTech = localStorage.getItem("tech");
          //alert(TheTech);
 		document.getElementById('TechNameOptions').innerHTML = TheTech;
-    
-        
-    }
-    // PhoneGap is ready
-    //
-    function onDeviceReady() {
         // Empty
-    	 initWEBDB();
+    	 //initWEBDB();
     	 //setupUser();
   	  	     	 
     }
@@ -111,7 +119,7 @@
 
 
 </head>
-<body onload="onLoad();" id="stage" class="theme">
+<body id="stage" class="theme">
 <p></p>
 
 <table border="0" cellspacing="0" cellpadding="0">
