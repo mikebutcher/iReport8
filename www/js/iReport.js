@@ -92,6 +92,8 @@ histURL = "http://www.chardonlabs.com/eReportv4.nsf/iPhoneHistory2?ReadViewEntri
 
 function getTemplates() {
 
+
+
     $('#progress').remove();
  $('body').append('<div id="progress1">Connecting to Chardon</div>');
 var t = setTimeout(" $('#progress1').remove();", 2800); //10 seconds
@@ -178,7 +180,7 @@ function initWEBDBold() {
 
 //Get Templates Functions
 if (slcount = null) {
-    slcount = o
+    slcount = 0
 };
 
 //Shrinking List
@@ -442,7 +444,7 @@ function histDocsJSON(oObject) {
 function TechiciansJSON(oObject) {
     var viewentries = oObject.viewentry;
     var n_viewentries = viewentries.length;
-    var slcount = viewentries.length;
+    var techcount = viewentries.length;
     var entrydata = viewentries[0].entrydata;
     var sCol0 = returnJSONValue(entrydata[0]);
     daLength = sCol0.length
@@ -474,7 +476,11 @@ function SLgotDocsJSON(oObject) {
     var n_viewentries = 0;
     }
     
-      try{      var slcount = viewentries.length;}
+      try{      var slcount = viewentries.length;
+
+                localStorage.setItem("slcount", viewentries.length);
+    
+      }
     
     catch(e){
     var slcount = 0;
@@ -570,7 +576,7 @@ function BVgotDocsJSON(oObject) {
                 //document.getElementById('BVCnt').innerHTML = document.getElementById('BVCnt').innerHTML + n_viewentries;
                 //document.getElementById('BVCnt').innerHTML = "<h1>"+n_viewentries+"</h1></br>Book View";
                 //document.getElementById('BVCnt').innerHTML = "</br>"+ n_viewentries+"<p>Book View";
-                localStorage.setItem("BVcount", viewentries.length);
+                localStorage.setItem("bvcount", viewentries.length);
 
                 //document.getElementById('tCount').innerHTML = n_viewentries;
                 for (var i = 0; i < n_viewentries; i++) {
@@ -760,6 +766,7 @@ function updateCounts() {
     function dataHandlerCompCount(transaction, results) {
         document.getElementById('CompCnt').innerHTML = "";
         document.getElementById('CompCnt').innerHTML = results.rows.length;
+         localStorage.setItem("odcount", results.rows.length);
 
     }
 
@@ -1135,6 +1142,7 @@ function loadOD() {
 
             //alert(  '<option value ="'+sCol0 +'">'+ sCol1.substring(0,30)  +'</option>');
             document.getElementById('customer_templates').innerHTML += '<option value ="' + sCol0 + '">' + sCol1.substring(0, 430) + '</option>';
+            localStorage.setItem("odcount", results.rows.length);
         }
    
         

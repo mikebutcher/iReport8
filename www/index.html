@@ -56,6 +56,39 @@ console.error = console.debug = console.info =  console.log
 
  function onLoad() {
 
+			//updateCounts();
+			//alert(localStorage.getItem("bvcount"));
+			
+
+			if (localStorage.getItem("bvcount") == null){
+				localStorage.setItem("bvcount", 0);
+			}
+
+			document.getElementById('BVCnt').innerHTML = localStorage.getItem("bvcount");
+			
+
+
+
+			//alert(localStorage.getItem("slcount"));	
+
+			if (localStorage.getItem("slcount") == null){
+				localStorage.setItem("slcount", 0);
+			}
+
+			document.getElementById('SLCnt').innerHTML = localStorage.getItem("slcount");
+			
+
+
+
+    		//alert("ODevice: "+localStorage.getItem("odcount"));	
+
+    		if (localStorage.getItem("odcount") == null){
+				localStorage.setItem("odcount", 0);
+			}
+
+			document.getElementById('CompCnt').innerHTML = localStorage.getItem("odcount");
+
+
 		document.addEventListener("deviceready", onDeviceReady, false);
 
 		console.log(navigator.userAgent + '\n') ; //what do ios8 return?
@@ -72,9 +105,6 @@ console.error = console.debug = console.info =  console.log
     function onDeviceReady() {
 
 		 console.log("in OnDeviceReady \n");
-
-		
-    		     
 
         var backupURL;
 		var daIndex = 0;
