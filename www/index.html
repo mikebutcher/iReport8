@@ -56,39 +56,6 @@ console.error = console.debug = console.info =  console.log
 
  function onLoad() {
 
-			//updateCounts();
-			//alert(localStorage.getItem("bvcount"));
-			
-
-			if (localStorage.getItem("bvcount") == null){
-				localStorage.setItem("bvcount", 0);
-			}
-
-			document.getElementById('BVCnt').innerHTML = localStorage.getItem("bvcount");
-			
-
-
-
-			//alert(localStorage.getItem("slcount"));	
-
-			if (localStorage.getItem("slcount") == null){
-				localStorage.setItem("slcount", 0);
-			}
-
-			document.getElementById('SLCnt').innerHTML = localStorage.getItem("slcount");
-			
-
-
-
-    		//alert("ODevice: "+localStorage.getItem("odcount"));	
-
-    		if (localStorage.getItem("odcount") == null){
-				localStorage.setItem("odcount", 0);
-			}
-
-			document.getElementById('CompCnt').innerHTML = localStorage.getItem("odcount");
-
-
 		document.addEventListener("deviceready", onDeviceReady, false);
 
 		console.log(navigator.userAgent + '\n') ; //what do ios8 return?
@@ -99,12 +66,16 @@ console.error = console.debug = console.info =  console.log
 		if (isChrome) {
 			initWEBDB();    //setup  WebSQL 
 			setupUser();	//iReport.js
+			updateCounts(); //update Counts
 		} 
     }
 
     function onDeviceReady() {
 
 		 console.log("in OnDeviceReady \n");
+
+		
+    		     
 
         var backupURL;
 		var daIndex = 0;
@@ -120,7 +91,7 @@ console.error = console.debug = console.info =  console.log
 		 	 hide("daJCPText");
 			//Check for blank Tech, if so then go to setup.html
 			
-		
+		updateCounts();
 		
 		//populate the Shrinking List
 		//loadSL();  //iReport.js
@@ -166,9 +137,9 @@ console.error = console.debug = console.info =  console.log
  //VERSION
  ///////////////////////////////////////////////
       
-	  var Version = localStorage.setItem('Version', 'iPhone iOS8 9-23-14');
+	//  var Version = localStorage.setItem('Version', 'iPhone iOS8 9-23-14');
     
-    
+    localStorage.setItem('Version', 'iPhone iOS8 9-22-14');
     
     //Business / Navigation Logic
     

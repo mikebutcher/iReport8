@@ -1,0 +1,144 @@
+<!DOCTYPE html> 
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1"> 
+	<title>iReport 8</title> 
+	<link rel="stylesheet" href="http://code.jquery.com/mobile/latest/jquery.mobile.css">
+	
+	<script src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
+	<script src="http://code.jquery.com/mobile/latest/jquery.mobile.js"></script>
+	
+</head> 
+
+<body> 
+
+<div data-role="page">
+
+	<div data-role="header" data-position="fixed">
+		<div data-role="navbar" class="ui-state-persist">
+	      <ul>
+	        <li><a class="ui-btn-active"  href="#" data-icon="grid" onClick="localStorage.setItem('listType', 'shrinkingList' );loadSL();"  id="daSLCnt" data-theme="a" >Shrink List <text id="SLCnt"></text></a></li>
+		    <li><a href="#" data-icon="grid" onClick="localStorage.setItem('listType', 'bookView' );loadBV(); " id="daBVCnt" data-theme="a"  >Book View <text id="BVCnt"></text></a></li>
+			<li><a href="#" data-icon="grid" onClick="localStorage.setItem('listType', 'onDevice' );loadOD(); "  id="GetOD" data-theme="a"  >On Device <text id="CompCnt"></text></a></li>
+		    </ul>
+	    </div>
+	    	<h2>My Service Calls</h2>
+	</div><!-- /header -->
+
+
+
+ <div style=" width: 100%; " data-role="panel"  data-position-fixed="true" data-position="right" data-display="overlay" id="adelePage"> 
+	    <h2>Malty's Grill</h2>
+	    <p>Phone number: 773-528-7483</p>
+	    <p>Address: 4000 E. Broad
+	    <br>Columbus, Ohio 60602 USA</p>
+	    <p>Email: thebestadelepitt@gmail.com</p>
+
+	    <a href="#" data-role="button" data-iconpos="top" data-theme="a" onclick=""><center><img src="img/logo.png" alt="Chardon Logo" height="35px" width="30px" ></center><h1>Start iReport</h1></br></a>
+
+
+	    <a href="#pageone" data-rel="close" class="ui-btn ui-btn-inline ui-shadow ui-corner-all ui-btn-b ui-icon-delete ui-btn-icon-left">Close</a>
+	  </div> 
+
+
+
+
+
+	
+
+
+	<article data-role="content">
+
+    <ul data-role="listview" >
+ 
+      <li style=" width: 960px; text-align:center;">
+     	 <a href="#adelePage" >
+         <h1 >Malty's Grill</h1>
+         <img src='http://icons.iconarchive.com/icons/icons8/android/24/Maps-Geo-Fence-icon.png'> 
+         <p>4000 East Broad Street, Columbus, Ohio 12345</p>
+	 	 </a>
+      </li>
+        <li style=" width: 960px; text-align:center;">
+     	 <a href="#adelePage" >
+         <h1 >Malty's Grill</h1>
+         <img src='http://icons.iconarchive.com/icons/icons8/android/24/Maps-Geo-Fence-icon.png'> 
+         <p>4000 East Broad Street, Columbus, Ohio 12345</p>
+	 	 </a>
+      </li>
+        <li style=" width: 960px; text-align:center;">
+     	 <a href="#adelePage" >
+         <h1 >Malty's Grill</h1>
+         <img src='http://icons.iconarchive.com/icons/icons8/android/24/Maps-Geo-Fence-icon.png'> 
+         <p>4000 East Broad Street, Columbus, Ohio 12345</p>
+	 	 </a>
+      </li>
+        <li style=" width: 960px; text-align:center;">
+     	 <a href="#adelePage" >
+         <h1 >Malty's Grill</h1>
+         <img src='http://icons.iconarchive.com/icons/icons8/android/24/Maps-Geo-Fence-icon.png'> 
+         <p>4000 East Broad Street, Columbus, Ohio 12345</p>
+	 	 </a>
+      </li>
+         <li style=" width: 960px; text-align:center;">
+     	 <a href="#adelePage" >
+         <h1 >Malty's Grill</h1>
+         <img src='http://icons.iconarchive.com/icons/icons8/android/24/Maps-Geo-Fence-icon.png'> 
+         <p>4000 East Broad Street, Columbus, Ohio 12345</p>
+	 	 </a>
+      </li>
+              <li style=" width: 960px; text-align:center;">
+     	 <a href="#adelePage" >
+         <h1 >Malty's Grill</h1>
+         <img src='http://icons.iconarchive.com/icons/icons8/android/24/Maps-Geo-Fence-icon.png'> 
+         <p>4000 East Broad Street, Columbus, Ohio 12345</p>
+	 	 </a>
+      </li>
+              <li style=" width: 960px; text-align:center;">
+     	 <a href="#adelePage" >
+         <h1 >Malty's Grill</h1>
+         <img src='http://icons.iconarchive.com/icons/icons8/android/24/Maps-Geo-Fence-icon.png'> 
+         <p>4000 East Broad Street, Columbus, Ohio 12345</p>
+	 	 </a>
+      </li>
+              <li style=" width: 960px; text-align:center;">
+     	 <a href="#adelePage" >
+         <h1 >Malty's Grill</h1>
+         <img src='http://icons.iconarchive.com/icons/icons8/android/24/Maps-Geo-Fence-icon.png'> 
+         <p>4000 East Broad Street, Columbus, Ohio 12345</p>
+	 	 </a>
+      </li>
+              <li style=" width: 960px; text-align:center;">
+     	 <a href="#adelePage" >
+         <h1 >Malty's Grill</h1>
+         <img src='http://icons.iconarchive.com/icons/icons8/android/24/Maps-Geo-Fence-icon.png'> 
+         <p>4000 East Broad Street, Columbus, Ohio 12345</p>
+	 	 </a>
+      </li>
+              <li style=" width: 960px; text-align:center;">
+     	 <a href="#adelePage" >
+         <h1 >Malty's Grill</h1>
+         <img src='http://icons.iconarchive.com/icons/icons8/android/24/Maps-Geo-Fence-icon.png'> 
+         <p>4000 East Broad Street, Columbus, Ohio 12345</p>
+	 	 </a>
+      </li>
+	   
+    </ul>
+
+	</article><!-- /content -->
+
+	<div data-role="footer" data-position="fixed">
+		<div data-role="navbar">
+	      <ul>
+	        <li><a href="#" data-icon="arrow-d" data-transition="fade" data-ajax="false" onclick="" >Get Templates</a></li>
+	        <li><a href="#" onclick="" data-icon="refresh" data-transition="fade">Sync</a></li>
+
+			     <li><a href="options.html" data-icon="gear" data-transition="fade">Exit Demo</a></li>
+	      </ul>
+	    </div>
+	</div><!-- /footer -->
+
+</div><!-- /page -->
+
+</body>
+</html>
